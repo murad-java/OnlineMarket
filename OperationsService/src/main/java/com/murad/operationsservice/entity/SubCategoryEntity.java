@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Data
@@ -19,4 +20,6 @@ public class SubCategoryEntity {
     @ManyToOne
     private CategoryEntity category;
     private LocalDateTime createDateTime=LocalDateTime.now();
+    @OneToMany
+    Set<ProductEntity> products;
 }
