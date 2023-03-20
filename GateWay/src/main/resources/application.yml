@@ -1,0 +1,28 @@
+server:
+  port: 8800
+
+spring:
+  application:
+    name: getaway
+  config:
+    import: optional:configserver:http://localhost:8802
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: user
+          uri: lb://user-server
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - StripPrefix=1
+        - id: order
+          uri: lb://order-server
+          predicates:
+            - Path=/order/**
+            - Path=/balance/**
+          filters:
+            - RewritePath=/order/(?<path>.*), /order-server/order/${path}
