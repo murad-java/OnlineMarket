@@ -25,7 +25,7 @@ public class SubCategoryService {
         return SubCategoryResponse.fromSubCategoryEntity(subCategoryEntity);
     }
 
-    private SubCategoryEntity getSubCategoryById(long subCategoryId) {
+    public SubCategoryEntity getSubCategoryById(long subCategoryId) {
         SubCategoryEntity subCategoryEntity = subCategoryRepository.findById(subCategoryId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND,"Subcategory not found with subCategoryId " + subCategoryId));
         return subCategoryEntity;
