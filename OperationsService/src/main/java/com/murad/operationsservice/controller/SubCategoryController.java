@@ -1,4 +1,4 @@
-package com.murad.operationsservice.controler;
+package com.murad.operationsservice.controller;
 
 import com.murad.operationsservice.dto.SubCategoryDto;
 import com.murad.operationsservice.dto.SubCategoryResponse;

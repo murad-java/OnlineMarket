@@ -1,0 +1,18 @@
+version: "3"
+services:
+  ftp:
+    image: fauria/vsftpd
+    container_name: ftp-server
+    restart: always
+    ports:
+      - "20:20"
+      - "21:21"
+      - "21100-21110:21100-21110"
+    environment:
+      - FTP_USER=market
+      - FTP_PASS=123
+      - PASV_ADDRESS=192.168.0.108
+      - PASV_MIN_PORT=21100
+      - PASV_MAX_PORT=21110
+    volumes:
+      - ./data:/home/vsftpd/myuser
