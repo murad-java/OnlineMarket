@@ -14,6 +14,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/subcategories")
 @RequiredArgsConstructor
+@CrossOrigin(origins = {"https://localhost:8080","https://localhost:3000","https://192.168.1.123:8080"})
 public class SubCategoryController {
     private final SubCategoryService subCategoryService;
 

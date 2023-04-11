@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/OnlineMarket.iml" filepath="$PROJECT_DIR$/OnlineMarket.iml" />
       <module fileurl="file://$PROJECT_DIR$/OperationsService/OperationsService.iml" filepath="$PROJECT_DIR$/OperationsService/OperationsService.iml" />
       <module fileurl="file://$PROJECT_DIR$/UserService/UserService.iml" filepath="$PROJECT_DIR$/UserService/UserService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ui_service.iml" filepath="$PROJECT_DIR$/ui_service.iml" />
     </modules>
   </component>
 </project>

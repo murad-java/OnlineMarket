@@ -2,6 +2,9 @@ server:
   port: 8804
 
 spring:
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
   application:
     name: operation
   config:
