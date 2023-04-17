@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/product")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"https://localhost:8080","https://localhost:3000","https://192.168.1.123:8080"})
+@CrossOrigin(origins = {"http://localhost:8080","http://localhost:3000","http://192.168.1.123:8080"})
 public class ProductController {
     private final ProductService productService;
     @GetMapping(path = "/list")

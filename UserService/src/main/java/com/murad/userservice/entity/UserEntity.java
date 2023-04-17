@@ -21,7 +21,6 @@ public class UserEntity {
     private String password;
     @Column(nullable = false,unique = true)
     private String email;
-    @Column(nullable = false)
     private String address;
     @Column(nullable = false)
     private Boolean active=true;
@@ -29,7 +28,6 @@ public class UserEntity {
     private LocalDateTime localDateTime=LocalDateTime.now();
     @Column(nullable = false)
     private String phone;
-    @Column(nullable = false)
     private String photoUrl;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

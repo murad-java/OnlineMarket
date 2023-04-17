@@ -2,7 +2,7 @@
   <section class="section-content padding-y">
     <div class="container">
 
-      <div class="card mb-3">
+      <div class="card mb-3 radius">
         <div class="card-body">
 
           <div class="row">
@@ -55,7 +55,7 @@
           <figure class="card card-product-grid">
             <div class="img-wrap">
               <span style="display: none" class="badge badge-danger"> NEW </span>
-              <img v-bind:src="product.img">
+              <img style="width: 100%; height: auto;"  :src="product.img">
             </div> <!-- img-wrap.// -->
             <figcaption class="info-wrap">
               <span href="#" class="title mb-2">{{ product.name }}</span>
@@ -87,6 +87,18 @@
       </nav>
     </div>
   </section>
+  <footer class=" bg-secondary footer mt-auto py-3">
+    <div class="container">
+
+
+      <section class="footer-bottom text-center">
+
+        <p class="text-white">-------------------------------------------------------</p>
+        <p class="text-muted"> &copy; {{year}} My Market, All rights reserved </p>
+        <br>
+      </section>
+    </div><!-- //container -->
+  </footer>
 </template>
 
 <script>
@@ -100,6 +112,7 @@ export default {
     return {
 
       loading: false,
+      year:2020,
       response: null,
       selectedCategory: null,
       selectedSubCategory: null,

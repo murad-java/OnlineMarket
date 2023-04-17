@@ -14,7 +14,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/category")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"https://localhost:8080","https://localhost:3000","https://192.168.1.123:8080"})
+@CrossOrigin(origins = {"http://localhost:8080","http://localhost:3000","http://192.168.1.123:8080"})
 public class CategoryController {
 
     private final CategoryService categoryService;

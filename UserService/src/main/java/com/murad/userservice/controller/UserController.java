@@ -17,16 +17,20 @@ import org.springframework.web.bind.annotation.*;
 import javax.naming.AuthenticationException;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/user")
 @RequiredArgsConstructor
+@CrossOrigin(origins = {"http://localhost:8080","http://localhost:3000","http://192.168.1.123:8080"})
 public class UserController {
 
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> register(@RequestBody UserRegDto userRegDto) throws UserAlreadyExistsException {
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody UserRegDto userRegDto) throws UserAlreadyExistsException,AuthenticationException {
         UserResponse userResponse = UserResponse.fromUserEntity(userService.register(userRegDto));
-        return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
+        LoginDto loginDto = LoginDto.builder().username(userRegDto.getUsername())
+                .password(userRegDto.getPassword()).build();
+        AuthenticationResponse authenticationResponse = userService.login(loginDto);
+        return new ResponseEntity<>(authenticationResponse, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
@@ -35,10 +39,11 @@ public class UserController {
         return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/iam")
     @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
-    public ResponseEntity<UserResponse> getUser(@PathVariable String username) throws UserNotFoundException {
-        UserResponse userResponse = UserResponse.fromUserEntity(userService.getUser(username));
+    public ResponseEntity<UserResponse> getUser() throws UserNotFoundException {
+
+        UserResponse userResponse = UserResponse.fromUserEntity(userService.getUser());
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 

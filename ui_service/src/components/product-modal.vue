@@ -1,78 +1,52 @@
 <template>
-
   <section class="section-content bg-white padding-y modal  " id="popup-modal" v-if="showModal" @click="closeModal">
-    <div class="container">
-
-      <!-- ============================ ITEM DETAIL ======================== -->
-      <div class="row modal-content" @click.stop>
-        <span class="close-mod" @click="closeModal">&times;</span>
-        <aside class="col-md-6">
-
+    <div class="container modal-content">
+      <div class="modal-header">
+        <button class="close" type="button" @click="closeModal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="form-row " @click.stop>
+        <aside class="form-group col-md-8">
           <div class="card product-details">
-
             <article class="gallery-wrap central">
               <div class="img-big-wrap">
                 <div>
                   <a href="#">
-                    <img v-if="!img" :src='imgs'>
-                    <img v-else :src='img'>
+                    <img  v-if="!img" class="item-thumb img-fluid" :src='imgs'>
+                    <img  v-else class="item-thumb img-fluid" :src='img'>
                   </a>
                 </div>
-              </div> <!-- slider-product.// -->
+              </div>
               <div class="thumbs-wrap">
-                <a v-for="image in imagesObj" href="#" class="item-thumb" @click="loadImage(image)" :key="image"> <img
+                <a v-for="image in imagesObj" href="#" class="item-thumb " @click="loadImage(image)" :key="image"> <img
                     :src='image.img'></a>
-
-              </div> <!-- slider-nav.// -->
-            </article> <!-- gallery-wrap .end// -->
-          </div> <!-- card.// -->
+              </div>
+            </article>
+          </div>
         </aside>
-        <main class="col-md-6">
+        <main class="form-group col-md-4">
           <article class="product-info-aside">
-
             <h2 class="title mt-3">{{ selectedProduct.name }}</h2>
-
-
             <div class="mb-3">
               <var class="price h4">Price: {{ selectedProduct.price }}</var>
-            </div> <!-- price-detail-wrap .// -->
-
+            </div>
             <p>{{ selectedProduct.description }}</p>
-
-
-            <!-- col.// -->
-            <div class="form-group col-md">
-              <a href="#" class="btn  btn-primary">
-                <i class="fas fa-shopping-cart"></i> <span class="text">Add to cart</span>
-              </a>
-
-            </div> <!-- col.// -->
-            <!-- row.// -->
-
-          </article> <!-- product-info-aside .// -->
-        </main> <!-- col.// -->
-      </div> <!-- row.// -->
-
-    </div> <!-- container .//  -->
+          </article>
+        </main>
+      </div>
+      <div class="modal-footer" @click.stop>
+        <button type="button" class="btn btn-info" @click="closeModal">
+          Close
+        </button>
+        <a href="#" class="btn  btn-primary">
+          <i class="fas fa-shopping-cart"></i> <span class="text">Add to cart</span>
+        </a>
+      </div>
+    </div>
   </section>
-
-
-  <!--  <div class="modal" v-if="showModal">-->
-  <!--    <div class="modal-content">-->
-  <!--      <span class="close" @click="closeModal">&times;</span>-->
-  <!--      <div class="product-details">-->
-  <!--        <h2>{{ selectedProduct.name }}</h2>-->
-  <!--        <p>{{ selectedProduct.description }}</p>-->
-  <!--        <p>Price: {{ selectedProduct.price }}</p>-->
-  <!--        &lt;!&ndash; Другие свойства продукта &ndash;&gt;-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </div>-->
 </template>
-
 <script>
-// import ImageService from "@/api/ImageService";
-
 export default {
   data() {
     return {
@@ -87,7 +61,7 @@ export default {
   },
   methods: {
     closeModal() {
-      this.img=null
+      this.img = null
       this.$emit('close');
     },
     loadImage(event) {
@@ -96,9 +70,7 @@ export default {
   }
 }
 </script>
-
 <style>
-/* Стили модального окна */
 .modal {
   display: block;
   position: fixed;
@@ -110,7 +82,9 @@ export default {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4) !important;
 }
-
+img {
+  object-fit: contain;
+}
 .modal-content {
   background-color: #fefefe;
   margin: 15% auto;
@@ -118,7 +92,6 @@ export default {
   border: 1px solid #888;
   width: 90%;
 }
-
 .close-mod {
   text-align: right;
   color: #aaa;
@@ -126,12 +99,10 @@ export default {
   font-size: 28px;
   font-weight: bold;
 }
-
 .central {
   left: 20%;
   top: auto;
 }
-
 .close:hover,
 .close:focus {
   color: black;

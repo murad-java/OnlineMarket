@@ -4,16 +4,19 @@ import com.murad.userservice.exception.AccessDeniedExceptionHandler;
 import com.murad.userservice.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 
 @Configuration
 @EnableWebSecurity
@@ -33,14 +36,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
+                .mvcMatchers("/user/register","/user/login").permitAll()
                 .antMatchers("/register","/login","/index/**","/index","/index.html").permitAll()
                 .antMatchers("/swagger-ui/**", "/swagger-resources/**", "/v2/api-docs/**","/v3/api-docs/**", "/webjars/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().fullyAuthenticated()
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedExceptionHandler)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
          http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new AccessDeniedExceptionHandler();
+    }
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
     }
 }
 

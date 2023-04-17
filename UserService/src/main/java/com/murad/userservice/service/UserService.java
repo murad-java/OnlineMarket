@@ -81,6 +81,10 @@ public class UserService {
         user.setRole(authorityDto.getAuthority());
         return user;
     }
+    public UserEntity getUser() {
+        String username = SecurityUtils.getCurrentUsername().get();
+        return getUser(username);
+    }
     public UserEntity getUser(String username) {
         UserEntity user = userRepository.findByUsername(username).orElseThrow(() ->
                 new UserNotFoundException("User with username " + username + " not found"));

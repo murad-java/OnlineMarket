@@ -13,21 +13,21 @@
           <div class="col-xl-4 col-lg-4 col-md-6">
             <div class="widgets-wrap float-md-right">
               <div class="widget-header mr-3">
-                <a href="#" class="widget-view">
+                <a href="#" class="widget-view" @click="openModal">
                   <div class="icon-area">
                     <i class="fa fa-user"></i>
-                    <span class="notify">3</span>
+                    <!--                    <span class="notify">3</span>-->
                   </div>
-                  <small class="text"> My profile </small>
+                  <small class="text"> {{ uname }} </small>
                 </a>
               </div>
               <div class="widget-header mr-3">
                 <a href="#" class="widget-view">
                   <div class="icon-area">
-                    <i class="fa fa-comment-dots"></i>
-                    <span class="notify">1</span>
+                    <i class="fa-solid fa-wallet"></i>
+                    <!--                    <span class="notify">1</span>-->
                   </div>
-                  <small class="text"> Message </small>
+                  <small class="text"> Wallet </small>
                 </a>
               </div>
               <div class="widget-header mr-3">
@@ -38,8 +38,11 @@
                   <small class="text"> Orders </small>
                 </a>
               </div>
+              <login-registration :show-modal="showModal" :user="userInfo" :log-model="logModel"
+                                  @dataChanged="userNameChange" @close="closeModal"/>
+              <cart-model :show-cart="showCart"  @close="closeCart"/>
               <div class="widget-header">
-                <a href="#" class="widget-view">
+                <a href="#" class="widget-view" @click="OpenCart">
                   <div class="icon-area">
                     <i class="fa fa-shopping-cart"></i>
                   </div>
@@ -52,12 +55,70 @@
       </div>
     </section>
   </header>
+
 </template>
 
 <script>
+import LoginRegistration from "@/components/LoginRegistration";
+import authService from "@/api/AuthService";
+import cartModal from "@/components/cart-modal";
 export default {
   name: 'HeaderVue',
+  data() {
+    return {
+      showModal: false, // флаг, указывающий, нужно ли показывать модальное окно
+      showCart: false,
+      uname: 'Log In',
+      unameDefault:'Log In',
+      logModel: null,
+      userInfo: null,
+    }
+  },
+  components: {
+    "login-registration": LoginRegistration,
+    "cart-model" :cartModal
+  },
+  methods: {
+    OpenCart(){
+      this.showCart = true
+    },
+    openModal() {
+      console.log("asdadsadasdasdad")
+      this.showModal = true;
+      let un = authService.getUserName()
+      if (un === '') this.logModel = false
+      else {
+        this.logModel = true
+        this.userInfo=authService.getCurrentUser().user
+      }
 
+    },
+    closeModal() {
+      this.showModal = false;
+      this.selectedProduct = null;
+    },
+    closeCart() {
+      this.showCart = false;
+    },
+    userNameChange() {
+      try {
+        this.uname = authService.getCurrentUser().user.username
+      }catch (err){
+        this.uname = this.unameDefault
+      }
+
+    }
+  },
+  mounted() {
+    let isTrue = authService.iAM();
+    console.log(isTrue)
+    if (isTrue) {
+      this.uname = authService.getUserName()
+    }
+    if (this.uname === '') {
+      this.uname = this.unameDefault
+    }
+  }
 }
 </script>
 
