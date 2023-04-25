@@ -17,9 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.naming.AuthenticationException;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:8080","http://localhost:3000","http://192.168.1.123:8080"})
 public class UserController {
 
     private final UserService userService;
@@ -37,6 +36,10 @@ public class UserController {
     public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginDto loginDto) throws AuthenticationException {
         AuthenticationResponse authenticationResponse = userService.login(loginDto);
         return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
+    }
+    @GetMapping("/get/{name}")
+    public  UserResponse getUserByName(@PathVariable String name){
+        return UserResponse.fromUserEntity( userService.getUser(name));
     }
 
     @GetMapping("/iam")

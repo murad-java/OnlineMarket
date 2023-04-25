@@ -40,11 +40,12 @@
               </div>
               <login-registration :show-modal="showModal" :user="userInfo" :log-model="logModel"
                                   @dataChanged="userNameChange" @close="closeModal"/>
-              <cart-model :show-cart="showCart"  @close="closeCart"/>
+              <cart-model :show-cart="showCart" @close="closeCart"/>
               <div class="widget-header">
                 <a href="#" class="widget-view" @click="OpenCart">
                   <div class="icon-area">
                     <i class="fa fa-shopping-cart"></i>
+                    <span class="notify" v-if="cartCount||cartCount>0">{{ cartCount }}</span>
                   </div>
                   <small class="text"> Cart </small>
                 </a>
@@ -62,6 +63,8 @@
 import LoginRegistration from "@/components/LoginRegistration";
 import authService from "@/api/AuthService";
 import cartModal from "@/components/cart-modal";
+import CartService from "@/api/CartService";
+import { mapState } from 'vuex'
 export default {
   name: 'HeaderVue',
   data() {
@@ -69,27 +72,45 @@ export default {
       showModal: false, // флаг, указывающий, нужно ли показывать модальное окно
       showCart: false,
       uname: 'Log In',
-      unameDefault:'Log In',
+      unameDefault: 'Log In',
       logModel: null,
       userInfo: null,
+      cartCount: 0,
     }
   },
   components: {
     "login-registration": LoginRegistration,
-    "cart-model" :cartModal
+    "cart-model": cartModal
+  },
+  watch: {
+    showCart: function () {
+      if (!this.showCart) {
+        this.getCartCount()
+      }
+    }
+  },
+  created() {
+    this.$store.subscribeAction((action) => {
+      if (action.type === 'incrementCount') {
+        this.getCartCount()
+      }
+    })
+
+  },
+  computed: {
+    ...mapState(['count'])
   },
   methods: {
-    OpenCart(){
+    OpenCart() {
       this.showCart = true
     },
     openModal() {
-      console.log("asdadsadasdasdad")
       this.showModal = true;
       let un = authService.getUserName()
       if (un === '') this.logModel = false
       else {
         this.logModel = true
-        this.userInfo=authService.getCurrentUser().user
+        this.userInfo = authService.getCurrentUser().user
       }
 
     },
@@ -103,21 +124,37 @@ export default {
     userNameChange() {
       try {
         this.uname = authService.getCurrentUser().user.username
-      }catch (err){
+      } catch (err) {
         this.uname = this.unameDefault
       }
 
+    },
+    getCartCount() {
+      this.cartCount =0;
+      let c = CartService.getCount()
+      if (c != null) {
+        c.then(value => {
+          if (value != null) {
+            this.cartCount = value
+          }
+        })
+
+      }
+    },
+    update() {
+      this.getCartCount()
     }
   },
   mounted() {
     let isTrue = authService.iAM();
-    console.log(isTrue)
     if (isTrue) {
       this.uname = authService.getUserName()
     }
     if (this.uname === '') {
       this.uname = this.unameDefault
     }
+    this.getCartCount()
+    // this.$store.dispatch('setMessage', this.getCartCount())
   }
 }
 </script>

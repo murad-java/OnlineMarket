@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="CartService" />
         <module name="ConfigService" />
         <module name="UserService" />
         <module name="GateWay" />
@@ -15,6 +16,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="CartService" target="17" />
       <module name="ConfigService" target="17" />
       <module name="EurekaService" target="17" />
       <module name="GateWay" target="17" />
@@ -24,6 +26,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="CartService" options="-parameters" />
       <module name="ConfigService" options="-parameters" />
       <module name="EurekaService" options="-parameters" />
       <module name="GateWay" options="-parameters" />

@@ -3,7 +3,7 @@ import Toasty from "@/api/Toasty";
 
 
 const ax = axios.create({
-    baseURL: 'http://192.168.1.123:8803/user',
+    baseURL: 'http://192.168.1.123:8800/user',
     withCredentials: true,
     headers: {
         accept: 'application/json'
@@ -19,15 +19,14 @@ class AuthService {
                 password: user.password
             })
             .then(response => {
-                    console.log(response.data.jwt)
                     if (response.data.jwt) {
                         localStorage.setItem('user', JSON.stringify(response.data));
+                        localStorage.setItem('jwt',response.data.jwt)
                     }
 
                     return response;
                 }
             ).catch(error => {
-                console.log(error)
                 Toasty.showError(error.message)
             });
         return res;
@@ -44,22 +43,22 @@ class AuthService {
 
             })
             .then(response => {
-                    console.log(response.data.jwt)
+
                     if (response.data.jwt) {
                         localStorage.setItem('user', JSON.stringify(response.data));
+                        localStorage.setItem('jwt',JSON.stringify(response.data.jwt))
                     }
-
                     return response;
                 }
             ).catch(error => {
-                console.log(error)
                 Toasty.showError(error.message)
             });
 
     }
 
     logout() {
-        localStorage.removeItem('user');
+        localStorage.removeItem('user')
+        localStorage.removeItem('jwt')
     }
     getCurrentUser() {
         return JSON.parse(localStorage.getItem('user'));

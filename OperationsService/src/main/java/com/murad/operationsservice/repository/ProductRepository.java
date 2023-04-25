@@ -12,4 +12,5 @@ import java.util.Set;
 public interface ProductRepository extends JpaRepository<ProductEntity,Long> {
     List<ProductEntity> findBySubCategoryEntity(SubCategoryEntity subCategoryEntity);
     List<ProductEntity> findBySubCategoryEntityIn(Set<SubCategoryEntity> subCategoryEntities);
+    List<ProductEntity> findByIdIn(List<Long> ids);
 }

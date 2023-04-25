@@ -229,8 +229,8 @@
 
 <template>
 
-  <div class="modal" tabindex="-1" role="dialog" v-if="showCart">
-    <div class="modal-dialog " style="max-width: 700px" role="document">
+  <div class="modal" tabindex="-1" @click="closeModal" role="dialog" v-if="showCart">
+    <div class="modal-dialog " @click.stop style="max-width: 700px" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Cart</h5>
@@ -244,11 +244,12 @@
             <tr>
               <th>Name</th>
               <th>Price</th>
+              <th>Count</th>
               <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(product, index) in cart" :key="product.id">
+            <tr v-for="(product) in cart" :key="product.id">
               <td>
                 <li class="list-group-item d-flex justify-content-between align-items-center">{{ product.name }}</li>
               </td>
@@ -256,8 +257,15 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">{{ product.price }} azn.
                 </li>
               </td>
+              <td >
+                <div class="row">
+                <button type="button" class="btn col-auto" @click="downCount(product)"><i class="fa-solid fa-angle-left" style="color: #ff6a00;"></i></button>
+                <li class="list-group-item d-flex justify-content-between align-items-center rounded-3">{{ product.count }}</li>
+                  <button type="button" class="btn  col-1"  @click="upCount(product)"><i class="fa-solid fa-angle-right" style="color: #ff6a00;"></i></button>
+                </div>
+              </td>
               <td class="align-content-center">
-                <button type="button" class="btn btn-danger" @click="deleteProduct(index)">
+                <button type="button" class="btn btn-danger" @click="deleteProduct(product)">
                   <i class="fa-solid fa-trash-can"></i>
                 </button>
               </td>
@@ -267,7 +275,7 @@
           <hr>
         </div>
         <div class="text-right mt-3 total">
-          <strong>Итого: {{ getTotalPrice() }} azn.</strong>
+          <strong>Итого: {{ total }} azn.</strong>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-info" @click="closeModal">
@@ -276,17 +284,6 @@
           <button type="button" class="btn btn-primary" @click="buyProducts()">
             Buy
           </button>
-<!--            <div class="modal-body">-->
-<!--              <div class="row">-->
-<!--                <div class="col-md-6"></div>-->
-<!--                <div class="col-md-3">-->
-<!--                  <button type="submit" class="btn btn-info btn-block " @click="closeModal"> Close</button>-->
-<!--                </div>-->
-<!--                <div class="col-md-3">-->
-<!--                  <button type="submit" class="btn btn-primary btn-block " @click="logout">Buy</button>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
         </div>
       </div>
     </div>
@@ -295,39 +292,61 @@
 </template>
 
 <script>
+import CartService from "@/api/CartService";
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
       showModal: false,
-      cart: [
-        {id: 1, name: 'Молоко', price: 50},
-        {id: 2, name: 'Хлеб', price: 30},
-        {id: 3, name: 'Сыр', price: 200},
-        {id: 4, name: 'Яйца', price: 40},
-        {id: 5, name: 'Колбаса', price: 150},
-        {id: 6, name: 'Сок', price: 60},
-      ],
+      total:0.0,
+      cart: [],
     };
   },
   props: {
     showCart: Boolean
   },
+  watch:{
+    showCart: function() {
+      if (this.showCart) {
+        CartService.getCart().then(value => {
+          this.updateCart(value)
+        })
+      }
+    }
+  },
   methods: {
-    deleteProduct(index) {
-      this.cart.splice(index, 1);
+    deleteProduct(product) {
+      CartService.delete(product.id).then(value => {
+        this.updateCart(value)
+        this.incrementCount()
+      })
     },
-    getTotalPrice() {
-      return this.cart.reduce((total, product) => total + product.price, 0);
+    ...mapActions(['incrementCount']),
+    upCount(product){
+      CartService.upCount(product.id).then(value => {
+        this.updateCart(value)
+      })
+    },
+    downCount(product){
+      CartService.downCount(product.id).then(value => {
+        this.updateCart(value)
+      })
+    },
+    updateCart(value){
+      if(value!=null) {
+        this.total = value.totalPrice
+        this.cart = value.products
+      }
     },
     closeModal() {
       this.$emit('close');
     },
     buyProducts() {
       // Действия по совершению покупки
-      this.cart = [];
       this.showModal = false;
     },
   },
+
 };
 </script>
 <style>

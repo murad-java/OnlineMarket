@@ -13,7 +13,7 @@ import java.util.Set;
 public class ProductEntity {
     @Id
     @GeneratedValue
-    private Long Id;
+    private Long id;
     private BigDecimal price;
     private String name;
     @ManyToOne

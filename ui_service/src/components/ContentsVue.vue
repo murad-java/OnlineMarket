@@ -123,7 +123,8 @@ export default {
       showModal: false, // флаг, указывающий, нужно ли показывать модальное окно
       selectedProduct: null, // выбранный продукт, который будет отображаться в модальном окне
       imagesObj:[],
-      imgs:null
+      imgs:null,
+      cartCount:0
 
     }
   },

@@ -1,8 +1,6 @@
 package com.murad.operationsservice.controller;
 
-import com.murad.operationsservice.dto.AddProductDto;
-import com.murad.operationsservice.dto.AllProductResponse;
-import com.murad.operationsservice.dto.ImageDto;
+import com.murad.operationsservice.dto.*;
 import com.murad.operationsservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/product")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:8080","http://localhost:3000","http://192.168.1.123:8080"})
+//@CrossOrigin(origins = {"http://localhost:8080","http://localhost:3000","http://192.168.1.123:8080"})
 public class ProductController {
     private final ProductService productService;
     @GetMapping(path = "/list")
@@ -25,6 +23,10 @@ public class ProductController {
         List<AllProductResponse> resources = productService.getAllProducts();
 
         return resources;
+    }
+    @PostMapping(path = "/get")
+    public List<ProductResponse> getProductById(@RequestBody List<Long> ids){
+        return productService.getProductsByIds(ids);
     }
     @GetMapping(path = "/img/{id}")
     public List<ImageDto>  getAllImages(@PathVariable long id) {

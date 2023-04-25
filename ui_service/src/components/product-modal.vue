@@ -39,7 +39,7 @@
         <button type="button" class="btn btn-info" @click="closeModal">
           Close
         </button>
-        <a href="#" class="btn  btn-primary">
+        <a href="#" class="btn  btn-primary" @click="addToCart()">
           <i class="fas fa-shopping-cart"></i> <span class="text">Add to cart</span>
         </a>
       </div>
@@ -47,6 +47,8 @@
   </section>
 </template>
 <script>
+import CartService from "@/api/CartService";
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -57,15 +59,22 @@ export default {
     showModal: Boolean,
     selectedProduct: Object,
     imagesObj: Object,
-    imgs: Object
+    imgs: String
   },
   methods: {
     closeModal() {
       this.img = null
       this.$emit('close');
     },
+    ...mapActions(['incrementCount']),
     loadImage(event) {
       this.img = event.img
+    },
+    addToCart(){
+      CartService.addToCart(this.selectedProduct.id).then(()=>
+      {
+        this.incrementCount();
+      })
     }
   }
 }

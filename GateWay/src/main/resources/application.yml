@@ -8,21 +8,35 @@ spring:
     import: optional:configserver:http://localhost:8802
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://192.168.1.123:8080"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders: "Authorization, Content-Type"
+            allowCredentials: true
+        default-filters:
+          - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Methods Access-Control-Allow-Headers Access-Control-Allow-Origin
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
       routes:
         - id: user
-          uri: lb://user-server
+          uri: lb://user
           predicates:
-            - Path=/api/auth/**
-          filters:
-            - StripPrefix=1
-        - id: order
-          uri: lb://order-server
+            - Path=/user/**
+        - id: operation
+          uri: lb://operation
           predicates:
-            - Path=/order/**
-            - Path=/balance/**
-          filters:
-            - RewritePath=/order/(?<path>.*), /order-server/order/${path}
+            - Path=/product/**
+            - Path=/category/**
+            - Path=/subcategories/**
+        - id: cart
+          uri: lb://cart
+          predicates:
+            - Path=/cart/**

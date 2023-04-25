@@ -46,7 +46,11 @@ public class ProductService {
             productResponse.setImg(getAllPhotoByProduct(productEntity.getId()));
         return productResponse;
     }
-
+    public List<ProductResponse> getProductsByIds(List<Long> ids){
+        List<ProductEntity> productEntities = productRepository.findByIdIn(ids);
+        return productEntities.stream().map(ProductResponse::fromProductEntity)
+                .collect(Collectors.toList());
+    }
     public List< byte[]> getAllPhotoByProduct(long id) {
         ProductEntity productEntity = getProductById(id);
             List<ProductImageEntity> productImageEntities = getProductImageByProductEntity(productEntity);
