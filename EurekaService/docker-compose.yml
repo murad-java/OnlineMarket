@@ -1,16 +1,8 @@
 version: '3'
 services:
-  myapp:
+  eureka:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8801:8801"
-    environment:
-      - SPRING_PROFILES_ACTIVE=dev
-      - JAVA_HOME=/usr/lib/jvm/java-17-oracle
-    volumes:
-      - .:/app
-      - /root/.m2:/root/.m2
-      - /usr/lib/jvm/java-17-oracle:/usr/lib/jvm/java-17-oracle
-
