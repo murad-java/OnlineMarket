@@ -10,6 +10,6 @@ FROM openjdk:17-jdk-alpine3.13
 
 WORKDIR /app
 
-COPY --from=builder /app/target/GateWay-0.0.1-SNAPSHOT.jar .
+COPY --from=builder /app/target/UserService-0.0.1-SNAPSHOT.jar .
 
-CMD ["java", "-jar", "GateWay-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "UserService-0.0.1-SNAPSHOT.jar"]
