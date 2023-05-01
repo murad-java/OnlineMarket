@@ -100,7 +100,7 @@ public class FileService {
     public byte[] downloadFile(String path) {
         InputStream inputStream = null;
         try {
-            if (!ftpClient.isAvailable() || !ftpClient.isConnected() ) connectToFtp();
+            connectToFtp();
             inputStream = ftpClient.retrieveFileStream(path);
             return convertInputStreamToByteArray(inputStream);
         } catch (IOException e) {
@@ -114,7 +114,7 @@ public class FileService {
     }
 
     private void close(){
-        if (ftpClient != null) {
+        if (ftpClient != null && (ftpClient.isConnected()||ftpClient.isAvailable())) {
             try {
                 ftpClient.completePendingCommand();
                 ftpClient.logout();

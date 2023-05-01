@@ -51,30 +51,31 @@
       </div>
       <div v-if="response" class="row">
 
-        <div v-for='product in response' class="col-md-3" :key="product" @click="openModal(product)">
-          <figure class="card card-product-grid">
-            <div class="img-wrap">
+        <div v-for='product in response' class="col-md-3 "  :key="product" @click="openModal(product)">
+          <figure class="card card-product-grid radius"  >
+            <div class="img-wrap "  >
               <span style="display: none" class="badge badge-danger"> NEW </span>
               <img style="width: 100%; height: auto;"  :src="product.img">
             </div> <!-- img-wrap.// -->
-            <figcaption class="info-wrap">
+            <figcaption class="info-wrap" >
               <span href="#" class="title mb-2">{{ product.name }}</span>
               <div class="price-wrap">
                 <i class="fa-solid fa-manat-sign fa-flip" style="color: #fc891d"></i>
                 <span class="price">{{ product.price }}</span>
               </div>
               <p class="text-muted ">{{ product.description }}</p>
-              <hr>
-              <a href="#" class="btn btn-outline-primary"> <i class="fa fa-cart-arrow-down"></i> Add to
+              <hr >
+              <div @click.stop>
+              <a href="#" class="btn btn-outline-primary"  @click=" addToCart(product)"> <i class="fa fa-cart-arrow-down" ></i> Add to
                 cart
               </a>
-
+              </div>
             </figcaption>
           </figure>
         </div>
       </div>
       <product-modal :show-modal="showModal" :selected-product="selectedProduct" :imgs="imgs" :images-obj="imagesObj" @close="closeModal" />
-      <nav v-if="response!=null && response.length>20" class="mb-4" aria-label="Page navigation sample">
+      <nav v-if="response!=null && response.length>20" class="mb-4" aria-label="Page navigation sample" >
         <ul class="pagination">
           <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
           <li class="page-item active"><a class="page-link" href="#">1</a></li>
@@ -105,6 +106,9 @@
 import instance from '../api/instance'
 import productModal from "@/components/product-modal";
 import ImageService from "@/api/ImageService";
+import Toasty from "@/api/Toasty";
+import CartService from "@/api/CartService";
+import { mapActions } from 'vuex'
 
 export default {
   name: 'ContentsVue',
@@ -142,7 +146,14 @@ export default {
           v.img = "data:image/png;base64,"+v.img
         })
       } ).catch(err=>{
-        console.log(err)
+        Toasty.showError(err.message)
+      })
+
+    },
+    ...mapActions(['incrementCount']),
+    addToCart(product){
+      CartService.addToCart(product.id).then(() => {
+        this.incrementCount();
       })
 
     },
@@ -165,7 +176,7 @@ export default {
               this.subCategories = response.data;
             })
             .catch(error => {
-              console.log(error);
+              Toasty.showError(error.message)
             });
       }
       this.updateContent();
@@ -182,7 +193,6 @@ export default {
       this.subCategories = []
       this.subCategoryId = -1;
       this.categoryId = -1;
-      this.loading = true;
       this.updateContent();
     },
     getContent: function (type, url) {
@@ -200,7 +210,8 @@ export default {
             });
           })
           .catch(error => {
-            console.log(error);
+            this.loading =false;
+            Toasty.showError(error.message)
           });
     },
     getAllSub: function () {
@@ -211,14 +222,27 @@ export default {
 
   },
   mounted() {
+    this.year=new Date().getFullYear()
     this.sendGetRequest();
     instance.get('/category/list')
         .then(response => {
           this.categories = response.data;
         })
         .catch(error => {
-          console.log(error);
+          Toasty.showError(error.message)
         });
   }
 };
 </script>
+<style>
+.custom-toastify-text {
+  color: #212121;
+}
+.radius {
+  border-radius: 10px;
+}
+img {
+  object-fit: cover;
+}
+
+</style>

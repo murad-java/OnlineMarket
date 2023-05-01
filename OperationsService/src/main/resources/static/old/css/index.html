@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta property="og:title" content="Заголовок страницы в OG">
+    <meta property="og:description" content="Описание страницы в OG">
+    <meta property="og:image" content="https://example.com/image.jpg">
+    <meta property="og:url" content="https://example.com/">
+    <title>Отправка GET-запроса на сервер и отображение ответа в формате JSON с помощью Vue.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <h1>Это мой сайт</h1>
+    <p>Он хороший</p>
+    <nav>
+        <ul>
+            <li><a href="index.html">Эта страница</a></li>
+            <li><a href="catalog.html">Другая страница</a></li>
+        </ul>
+    </nav>
+</header>
+<div id="app">
+
+    <div v-if="loading">Загрузка...</div>
+
+    <div v-if="response" class="product-container">
+        <div class="row">
+            <div v-for="product in response" class="square">
+                <img v-bind:src="product.img" alt="Product Image" />
+                <strong>{{ product.name }}</strong><br>
+                {{ product.description }}<br>
+                {{ product.price }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            loading: false,
+            response: null
+        },
+        created: function(){
+          this.sendGetRequest();
+        },
+        methods: {
+
+            sendGetRequest: function () {
+                this.loading = true;
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "/product/list", true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        let response = JSON.parse(xhr.responseText);
+                        app.loading = false;
+                        app.response = response;
+
+                        // Iterate through each product in the response and convert the Images array to base64
+                        app.response.forEach(function(product) {
+                                        product.img ="data:image/png;base64,"+product.img;
+                        });
+                    }
+                };
+                xhr.send();
+            }
+
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+.square {
+    width: 150px;
+    height: auto;
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    display: inline-block;
+}
+
+.row {
+    text-align: center;
+}
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+#app {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.product-container {
+    background-color: #f2f2f2;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+img {
+    width: 100px;
+    height: 100px;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    padding: 0 20px;
+    background-color: #f7f7f7;
+}
+
+.logo-container img {
+    height: 50px;
+}
+
+.user-info-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-balance span,
+.user-cart span,
+.user-name span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.user-balance span {
+    color: green;
+}
+
+.user-cart span {
+    color: blue;
+}
+
+.user-name span {
+    color: black;
+}
