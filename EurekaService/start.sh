@@ -27,6 +27,7 @@ After=syslog.target
 
 [Service]
 User=root
+WorkingDirectory=${PROJECT_DIR}
 ExecStart=/usr/bin/java -jar ${JAR_FILE}
 SuccessExitStatus=143
 Restart=always
