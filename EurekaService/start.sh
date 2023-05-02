@@ -16,6 +16,7 @@ JAR_FILE=target/${PROJECT_NAME}-0.0.1-SNAPSHOT.jar
 
 # Определить имя сервиса
 SERVICE_NAME=${PROJECT_NAME}
+systemctl stop ${SERVICE_NAME}
 rm -R /etc/systemd/system/${SERVICE_NAME}.service
 # Определить путь к файлу конфигурации
 #SERVICE_CONFIG=${PROJECT_DIR}/myapp.conf
