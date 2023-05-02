@@ -3,11 +3,11 @@
 PROJECT_NAME=EurekaService
 
 # Определить директорию проекта
-PROJECT_DIR=/home/ubuntu/mymarket/OnlineMarket/${PROJECT_NAME}
+PROJECT_DIR=/home/ubuntu/my-market/OnlineMarket/${PROJECT_NAME}
 
 # Перейти в директорию проекта
 cd ${PROJECT_DIR}
-
+rm -R target
 # Собрать проект с помощью Maven
 mvn clean package
 
