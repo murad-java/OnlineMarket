@@ -11,8 +11,8 @@
         <module name="ConfigService" />
         <module name="UserService" />
         <module name="GateWay" />
-        <module name="EurekaService" />
         <module name="OperationsService" />
+        <module name="EurekaService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

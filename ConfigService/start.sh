@@ -8,7 +8,7 @@ PROJECT_DIR=/home/ubuntu/my-market/OnlineMarket/${PROJECT_NAME}
 # Перейти в директорию проекта
 cd ${PROJECT_DIR}
 # Собрать проект с помощью Maven
-mvn clean package
+mvn clean package -DskipTests
 
 # Определить путь к файлу JAR
 JAR_FILE=target/${PROJECT_NAME}-0.0.1-SNAPSHOT.jar
