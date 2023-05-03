@@ -1,5 +1,8 @@
 server:
   port: 8801
+  tomcat:
+    threads:
+      max: 2
 spring:
   application:
     name: eureka
