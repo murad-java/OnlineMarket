@@ -7,7 +7,6 @@ PROJECT_DIR=/home/ubuntu/my-market/OnlineMarket/${PROJECT_NAME}
 
 # Перейти в директорию проекта
 cd ${PROJECT_DIR}
-rm -R target
 # Собрать проект с помощью Maven
 mvn clean package
 

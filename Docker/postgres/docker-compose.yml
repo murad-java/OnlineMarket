@@ -4,7 +4,7 @@ services:
     image: postgres
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
+      POSTGRES_PASSWORD: MuRaD198852_Mmm
       POSTGRES_DB: market
     ports:
-      - "5432:5432"
+      - "5545:5432"

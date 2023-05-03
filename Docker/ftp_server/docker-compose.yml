@@ -5,12 +5,12 @@ services:
     container_name: ftp-server
     restart: always
     ports:
-      - "20:20"
-      - "21:21"
+      - "9020:20"
+      - "9021:21"
       - "21100-21110:21100-21110"
     environment:
       - FTP_USER=market
-      - FTP_PASS=123
+      - FTP_PASS=MuRaD198852_Mmm
       - PASV_ADDRESS=192.168.0.108
       - PASV_MIN_PORT=21100
       - PASV_MAX_PORT=21110
