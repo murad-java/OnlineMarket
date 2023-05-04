@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROJECT_NAME=OperationService
+PROJECT_NAME=OperationsService
 
 # Определить директорию проекта
 PROJECT_DIR=/home/ubuntu/my-market/OnlineMarket/${PROJECT_NAME}

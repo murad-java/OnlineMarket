@@ -22,6 +22,10 @@ eureka:
   client:
     service-url:
       defaultZone: http://3.78.84.198:8801/eureka
+  instance:
+    hostname: 3.126.38.88
+    non-secure-port: 8804
+    ip-address: 172.31.47.159
 
 jwt:
   base64-secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
