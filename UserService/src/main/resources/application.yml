@@ -21,7 +21,7 @@ eureka:
       defaultZone: http://3.78.84.198:8801/eureka
   instance:
     hostname: 3.126.38.88
-    non-secure-port: 8804
+    non-secure-port: 8803
     ip-address: 172.31.47.159
 
 jwt:
