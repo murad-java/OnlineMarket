@@ -4,9 +4,30 @@ server:
 spring:
   application:
     name: user
-  config:
-    import: optional:configserver:http://localhost:8802
+  datasource:
+    url: jdbc:postgresql://3.69.157.49:5545/market
+    username: postgres
+    password: MuRaD198852_Mmm
+  jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+  output:
+      ansi:
+        enabled: always
+eureka:
+  client:
+    service-url:
+      defaultZone: http://3.78.84.198:8801/eureka
 
 jwt:
   base64-secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
   expirationMs: 86400000 #24 hours
+
+ftp:
+  server:
+    host: 3.69.157.49
+    port: 9021
+    username: market
+    password: MuRaD198852_Mmm
+    directory: /images
