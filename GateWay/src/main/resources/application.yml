@@ -13,7 +13,7 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "http://192.168.1.123:8080"
+            allowedOrigins: "http://3.78.84.198:8080"
             allowedMethods:
               - GET
               - POST

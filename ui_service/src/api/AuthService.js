@@ -3,7 +3,7 @@ import Toasty from "@/api/Toasty";
 
 
 const ax = axios.create({
-    baseURL: 'http://192.168.1.123:8800/user',
+    baseURL: 'http://3.78.84.198:8800/user',
     withCredentials: true,
     headers: {
         accept: 'application/json'
