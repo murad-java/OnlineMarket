@@ -13,7 +13,12 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "http://3.78.84.198/"
+            allowedOrigins:
+              - "http://3.78.84.198/"
+              - "http://www.gamit.az"
+              - "https://www.gamit.az"
+              - "http://gamit.az"
+              - "https://gamit.az"
             allowedMethods:
               - GET
               - POST
