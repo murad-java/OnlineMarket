@@ -95,7 +95,7 @@
       <section class="footer-bottom text-center">
 
         <p class="text-white">-------------------------------------------------------</p>
-        <p class="text-muted"> &copy; {{year}} My Market, All rights reserved </p>
+        <p class="text-muted"> &copy; {{year}} Gamit.az, All rights reserved </p>
         <br>
       </section>
     </div><!-- //container -->
