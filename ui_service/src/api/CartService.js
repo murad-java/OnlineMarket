@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 const ax = axios.create({
-    baseURL: 'https://3.78.84.198:8800/cart',
+    baseURL: 'https://gamit.az:8800/cart',
     withCredentials: true,
     headers: {
         accept: 'application/json'
