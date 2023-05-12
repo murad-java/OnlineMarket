@@ -3,6 +3,11 @@ server:
   tomcat:
     threads:
       max: 2
+  ssl:
+    key-store-type: PKCS12
+    key-store: /etc/letsencrypt/live/gamit.az/keystore.p12
+    key-store-password: 123 # Пароль менять на пароль от ШХЛ
+
 spring:
   application:
     name: getaway
