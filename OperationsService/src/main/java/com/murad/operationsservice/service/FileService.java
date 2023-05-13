@@ -151,7 +151,11 @@ public class FileService {
             ftpClient.login(username, password);
             ftpClient.changeWorkingDirectory(directory);
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-//            ftpClient.enterLocalActiveMode();
+            ftpClient.setDefaultTimeout(60000);
+            ftpClient.setConnectTimeout(30000);
+            ftpClient.setSoTimeout(30000);
+            //ftpClient.reinitialize();
+            ftpClient.enterLocalActiveMode();
         } catch (IOException e) {
             e.printStackTrace();
         }
