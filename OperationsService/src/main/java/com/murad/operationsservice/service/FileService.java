@@ -105,7 +105,7 @@ public class FileService {
             return convertInputStreamToByteArray(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
-            close();
+            //close();
             return null;
         } finally {
 
