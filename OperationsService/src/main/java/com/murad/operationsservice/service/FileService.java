@@ -151,6 +151,7 @@ public class FileService {
             ftpClient.login(username, password);
             ftpClient.changeWorkingDirectory(directory);
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+            ftpClient.enterLocalPassiveMode();
            // ftpClient.enterLocalActiveMode();
         } catch (IOException e) {
             e.printStackTrace();
