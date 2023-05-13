@@ -34,7 +34,7 @@ jwt:
 ftp:
   server:
     host: 3.69.157.49
-    port: 9021
+    port: 21
     username: market
     password: MuRaD198852_Mmm
     directory: /images

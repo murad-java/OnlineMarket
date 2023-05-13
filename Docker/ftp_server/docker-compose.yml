@@ -15,4 +15,6 @@ services:
       - PASV_MIN_PORT=21100
       - PASV_MAX_PORT=21110
     volumes:
-      - ./data:/home/vsftpd/myuser
+      - ./data:/home/ubuntu/ftp
+
+
