@@ -2,12 +2,12 @@
   <section class="section-content padding-y">
     <div class="container">
 
-      <div class="card mb-3 radius">
+      <div class="card mb-3 radius shadow-sm">
         <div class="card-body">
 
           <div class="row">
-            <div class="col-md-2">Filter by</div> <!-- col.// -->
-            <div class="col-md-10">
+            <div class="col-md-1">Filter by</div> <!-- col.// -->
+            <div class="col-md-11">
               <ul class="list-inline">
                 <li class="list-inline-item mr-3 dropdown"><a href="#" class="dropdown-toggle"
                                                               data-toggle="dropdown"> Categories </a>
@@ -52,18 +52,19 @@
       <div v-if="response" class="row">
 
         <div v-for='product in response' class="col-md-3 "  :key="product" @click="openModal(product)">
-          <figure class="card card-product-grid radius"  >
-            <div class="img-wrap "  >
+          <figure class="card card-product-grid radius shadow"  >
+            <div class="img-wrap align-content-center"  >
               <span style="display: none" class="badge badge-danger"> NEW </span>
-              <img style="width: 100%; height: auto;"  :src="product.img">
+              <img style="width: 94%; height: auto; margin-top: 4%;"  :src="product.img">
             </div> <!-- img-wrap.// -->
             <figcaption class="info-wrap" >
-              <span href="#" class="title mb-2">{{ product.name }}</span>
+              <h4 href="#" class="title mb-2">{{ product.name }}</h4>
               <div class="price-wrap">
-                <i class="fa-solid fa-manat-sign fa-flip" style="color: #fc891d"></i>
-                <span class="price">{{ product.price }}</span>
+                <span class="price" style="font-size: 3ex">{{ product.price }}</span>
+                <i class="fa-solid fa-manat-sign fa-flip" style="color: #fc891d;font-size: 2.5ex"></i>
+
               </div>
-              <p class="text-muted ">{{ product.description }}</p>
+<!--              <p class="text-muted ">{{ product.description }}</p>-->
               <hr >
               <div @click.stop>
               <a href="#" class="btn btn-outline-primary"  @click=" addToCart(product)"> <i class="fa fa-cart-arrow-down" ></i> Add to
