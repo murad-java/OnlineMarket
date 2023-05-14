@@ -13,14 +13,14 @@
               <div class="img-big-wrap">
                 <div>
                   <a href="#">
-                    <img  v-if="!img" class="item-thumb img-fluid" :src='imgs'>
-                    <img  v-else class="item-thumb img-fluid" :src='img'>
+                    <img  v-if="!img" class="item-thumb img-fluid" style="height: auto; width: auto" :src='imgs'>
+                    <img  v-else class="item-thumb img-fluid" style="height: auto; width: auto" :src='img'>
                   </a>
                 </div>
               </div>
               <div class="thumbs-wrap">
                 <a v-for="image in imagesObj" href="#" class="item-thumb " @click="loadImage(image)" :key="image"> <img
-                    :src='image.img'></a>
+                    style="height: auto; width: auto" :src='image.img'></a>
               </div>
             </article>
           </div>
