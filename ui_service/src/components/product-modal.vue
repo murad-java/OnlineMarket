@@ -87,7 +87,7 @@ export default {
   left: 0%;
   top: 0%;
   width: 100%;
-  height: 100%;
+  height: auto;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4) !important;
 }
@@ -96,7 +96,7 @@ img {
 }
 .modal-content {
   background-color: #fefefe;
-  margin: 15% auto;
+  margin: 10% auto;
   padding: 20px;
   border: 1px solid #888;
   width: 90%;
