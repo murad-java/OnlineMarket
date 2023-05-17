@@ -41,6 +41,7 @@
               <login-registration :show-modal="showModal" :user="userInfo" :log-model="logModel"
                                   @dataChanged="userNameChange" @close="closeModal"/>
               <cart-model :show-cart="showCart" @close="closeCart"/>
+              <info-model :show-info="showInfo" @close="closeInfo"/>
               <div class="widget-header">
                 <a href="#" class="widget-view" @click="OpenCart">
                   <div class="icon-area">
@@ -48,6 +49,15 @@
                     <span class="notify" v-if="cartCount||cartCount>0">{{ cartCount }}</span>
                   </div>
                   <small class="text"> Cart </small>
+                </a>
+              </div>
+              <div class="widget-header mr-3">
+                <a href="#" class="widget-view" @click="OpenInfo">
+                  <div class="icon-area">
+                    <i class="fa-solid fa-info-circle"></i>
+                    <!--                    <span class="notify">1</span>-->
+                  </div>
+                  <small class="text"> Info </small>
                 </a>
               </div>
             </div>
@@ -63,6 +73,7 @@
 import LoginRegistration from "@/components/LoginRegistration";
 import authService from "@/api/AuthService";
 import cartModal from "@/components/cart-modal";
+import info from "@/components/infoModal";
 import CartService from "@/api/CartService";
 import { mapState } from 'vuex'
 export default {
@@ -71,6 +82,7 @@ export default {
     return {
       showModal: false, // флаг, указывающий, нужно ли показывать модальное окно
       showCart: false,
+      showInfo: false,
       uname: 'Log In',
       unameDefault: 'Log In',
       logModel: null,
@@ -80,7 +92,8 @@ export default {
   },
   components: {
     "login-registration": LoginRegistration,
-    "cart-model": cartModal
+    "cart-model": cartModal,
+    "info-model": info
   },
   watch: {
     showCart: function () {
@@ -104,6 +117,9 @@ export default {
     OpenCart() {
       this.showCart = true
     },
+    OpenInfo() {
+      this.showInfo = true
+    },
     openModal() {
       this.showModal = true;
       let un = authService.getUserName()
@@ -117,9 +133,13 @@ export default {
     closeModal() {
       this.showModal = false;
       this.selectedProduct = null;
+
     },
     closeCart() {
       this.showCart = false;
+    },
+    closeInfo(){
+      this.showInfo=false
     },
     userNameChange() {
       try {
