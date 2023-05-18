@@ -1,6 +1,6 @@
 <template>
   <section class="section-content bg-white padding-y modal  " id="popup-modal" v-if="showInfo" @click="closeModal">
-    <div class="container modal-content" @click.stop>
+    <div class="container modal-contents" @click.stop>
      <div class="modal-header align-items-center">
        <h5 class="modal-title">Info</h5>
        <div class="row align-items-center justify-content-center w-75  ml-5" >
@@ -25,7 +25,7 @@
           </div>
         </div>
         <div v-if="isAboutActive" class="textarea-wrapper w-100 align-content-center">
-          <textarea id="my-textarea" v-model="text" rows="4" placeholder='gamit.az müxtəlif proqramlaşdırma dillərində proqramlaşdırma kurslarına
+          <textarea id="my-textarea" readonly rows="4" placeholder='gamit.az müxtəlif proqramlaşdırma dillərində proqramlaşdırma kurslarına
 çıxışı təmin edən saytdır. Saytımızda proqramçılar tərəfindən hazırlanmış
 kursların geniş seçimini tapa bilərsiniz.
 
@@ -39,7 +39,7 @@ Hər hansı bir sualınız, istək və ya təklifiniz olarsa, zəhmət olmasa ve
 saytımızdakı əlaqə forması vasitəsilə bizimlə əlaqə saxlayın.'></textarea>
         </div>
         <div v-if="isTermsActive" class="textarea-wrapper w-100 ">
-          <textarea id="my-textarea" v-model="text" rows="4" placeholder='İstifadə şərtləri
+          <textarea id="my-textarea" readonly  rows="4" placeholder='İstifadə şərtləri
 
 Gamit.az saytına xoş gəlmisiniz.
 Aşağıda xidmətlərimizə və məzmunumuza girişinizi tənzimləyən saytımızdan istifadə
@@ -69,7 +69,7 @@ Dəyişikliklər vebsaytımızda yerləşdiriləcək və biz sizi vaxtaşırı n
 səhifəni yoxlamağı tövsiyə edirik.'></textarea>
         </div>
         <div v-if="isPrivacyActive" class="textarea-wrapper w-100 ">
-          <textarea id="my-textarea" v-model="text" rows="4" placeholder='  Məxfilik Siyasəti
+          <textarea id="my-textarea" readonly  rows="4" placeholder='  Məxfilik Siyasəti
 
 Sayta daxil olan hər bir istifadəçi aşağıda göstərilən qaydaları qəbul edir.
 Bu qaydalar istifadəçilərə xəbərdarlıq edilmədən əlavə edilə, dəyişdirilə və ya silinə bilər.
@@ -242,11 +242,12 @@ export default {
 img {
   object-fit: contain;
 }
-.modal-content {
+.modal-contents {
   background-color: #ffffff;
   margin: 2% auto;
   padding: 20px;
   border: 1px solid #888;
+  border-radius: 12px;
   width: 90%;
 }
 .close-mod {

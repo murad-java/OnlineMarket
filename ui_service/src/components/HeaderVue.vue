@@ -42,7 +42,7 @@
                                   @dataChanged="userNameChange" @close="closeModal"/>
               <cart-model :show-cart="showCart" @close="closeCart"/>
               <info-model :show-info="showInfo" @close="closeInfo"/>
-              <div class="widget-header">
+              <div class="widget-header mr-2">
                 <a href="#" class="widget-view" @click="OpenCart">
                   <div class="icon-area">
                     <i class="fa fa-shopping-cart"></i>
@@ -51,7 +51,7 @@
                   <small class="text"> Cart </small>
                 </a>
               </div>
-              <div class="widget-header mr-3">
+              <div class="widget-header mr-1">
                 <a href="#" class="widget-view" @click="OpenInfo">
                   <div class="icon-area">
                     <i class="fa-solid fa-info-circle"></i>

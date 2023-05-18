@@ -10,6 +10,6 @@ sudo npm install
 sudo npm run build
 sudo cp -R dist /var/www/html
 sudo systemctl start nginx
-
+cd ..
 sudo sh ./EurekaService/start.sh
 sudo sh ./GateWay/start.sh
