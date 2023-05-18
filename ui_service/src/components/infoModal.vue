@@ -14,7 +14,7 @@
        </button>
       </div>
       <div class="form-row " >
-        <div v-if="isContactActive" class="p-5  w-100 align-content-center justify-content-center" style="height: 500px">
+        <div v-if="isContactActive" class="p-5  w-100 align-content-center justify-content-center" style="height: 400px">
           <div class="row align-content-start justify-content-start">
             <div class="col-1"><h6>Tel.:</h6></div>
             <div class="col-2">+994705116781</div>
@@ -269,8 +269,8 @@ img {
 
 
 .textarea-wrapper {
-  max-height: 500px;
-  height: 500px;
+  max-height: 400px;
+  height: 400px;
   overflow-y: auto;
 }
 
