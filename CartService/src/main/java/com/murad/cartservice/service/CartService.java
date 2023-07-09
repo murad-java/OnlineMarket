@@ -35,6 +35,10 @@ public class CartService {
         var cartEntities = cartRepository.findByUserId(userResponse.getId());
         return cartEntities;
     }
+    private List<CartEntity> getCartEntityByUser(UserResponse userResponse) {
+        var cartEntities = cartRepository.findByUserId(userResponse.getId());
+        return cartEntities;
+    }
     private CartEntity getProductInCart(Long id){
         return cartRepository.findById(id).orElseThrow(() -> {
             throw new InfoNotFoundException("Not found product in cart!");
@@ -44,13 +48,7 @@ public class CartService {
     public ProductBasket getCart() {
         var cartEntities = getCartEntityByUser();
 
-        if (cartEntities == null || cartEntities.size() == 0) return null;
-        var ids = cartEntities.stream().map(cartEntity -> cartEntity.getProductId()).collect(Collectors.toList());
-        var productResponseList = productService.getProductsByIds(ids);
-        var cartResponses = cartEntities.stream()
-                .map(cartEntity -> CartResponse.builder().id(cartEntity.getId()).count(cartEntity.getCount()).productId(cartEntity.getProductId()).build())
-                .collect(Collectors.toList());
-        return ProductBasket.fromProductResponsesAndCartResponses(productResponseList, cartResponses);
+        return getProduct(cartEntities);
     }
 
     public ProductBasket upCount(long id) {
@@ -111,5 +109,21 @@ public class CartService {
         if(productBasket!=null && productBasket.getProducts()!=null) {
             return productBasket.getProducts().size();
         }else return 0;
+    }
+
+    public ProductBasket getCart(UserResponse user) {
+        var cartEntities = getCartEntityByUser(user);
+
+        return getProduct(cartEntities);
+    }
+
+    private ProductBasket getProduct(List<CartEntity> cartEntities) {
+        if (cartEntities == null || cartEntities.size() == 0) return null;
+        var ids = cartEntities.stream().map(cartEntity -> cartEntity.getProductId()).collect(Collectors.toList());
+        var productResponseList = productService.getProductsByIds(ids);
+        var cartResponses = cartEntities.stream()
+                .map(cartEntity -> CartResponse.builder().id(cartEntity.getId()).count(cartEntity.getCount()).productId(cartEntity.getProductId()).build())
+                .collect(Collectors.toList());
+        return ProductBasket.fromProductResponsesAndCartResponses(productResponseList, cartResponses);
     }
 }

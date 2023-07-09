@@ -3,6 +3,7 @@ package com.murad.cartservice.controller;
 import com.murad.cartservice.dto.CountOperation;
 import com.murad.cartservice.dto.ProductBasket;
 import com.murad.cartservice.dto.SetCount;
+import com.murad.cartservice.dto.UserResponse;
 import com.murad.cartservice.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,10 @@ public class CartController {
     public ProductBasket getProductInCartByUserId() {
         return cartService.getCart();
     }
-
+    @PostMapping("/get")
+    public ProductBasket getProductInCartByUser(@RequestBody UserResponse user ) {
+        return cartService.getCart(user);
+    }
     @GetMapping("/count")
     public int getCount(){
         return cartService.getCount();

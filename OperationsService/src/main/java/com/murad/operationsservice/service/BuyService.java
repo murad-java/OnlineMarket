@@ -38,7 +38,7 @@ public class BuyService {
         log.info("Получил команду на операцию оплаты");
         var user = getUser();
         log.info("USER ID {}",user.getId());
-        var productBasket= cartServiceClient.getCart();
+        var productBasket= cartServiceClient.getCart(user);
         PaymentRequest paymentRequest=null;
         log.info("Количество продукта в корзине {}, ID user {}",productBasket.getProducts().size(),user.getId());
         if(productBasket==null) return null;
