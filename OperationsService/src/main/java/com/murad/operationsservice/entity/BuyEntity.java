@@ -25,7 +25,7 @@ public class BuyEntity {
         Long productId;
         LocalDateTime dateTime =LocalDateTime.now();
         BigDecimal price;
-        boolean isError=false;
+        boolean error=false;
         String returnCode;
         String returnMessage;
         boolean pay=false;
