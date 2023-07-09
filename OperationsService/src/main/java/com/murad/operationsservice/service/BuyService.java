@@ -36,6 +36,8 @@ public class BuyService {
     String URL;
     public PaymentRequest buyFromCart() {
         log.info("Получил команду на операцию оплаты");
+        var user = getUser();
+        log.info("USER ID {}",user.getId());
         var productBasket= cartServiceClient.getCart();
         PaymentRequest paymentRequest=null;
         var user = getUser();
