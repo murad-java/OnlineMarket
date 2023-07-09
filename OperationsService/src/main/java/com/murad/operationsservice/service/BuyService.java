@@ -34,8 +34,10 @@ public class BuyService {
     @Value("${balance.server.url}")
     String URL;
     public String buyFromCart() {
+        log.info("Получил команду на операцию оплаты");
         var productBasket= cartServiceClient.getCart();
         var user = getUser();
+        log.info("Количество продукта в корзине {}, ID user {}",productBasket.getProducts().size(),user.getId());
         if(productBasket==null) return null;
         var uuid = hashIdGeneration.getHash(productBasket.getTotalPrice().toString() , UUID.randomUUID().toString());
         for(var cart : productBasket.getProducts()){
