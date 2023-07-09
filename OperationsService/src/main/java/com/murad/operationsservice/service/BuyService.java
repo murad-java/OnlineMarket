@@ -3,6 +3,7 @@ package com.murad.operationsservice.service;
 import com.murad.operationsservice.configuration.CartServiceClient;
 import com.murad.operationsservice.configuration.RequestHelper;
 import com.murad.operationsservice.configuration.UserService;
+import com.murad.operationsservice.dto.PaymentRequest;
 import com.murad.operationsservice.dto.PaymentReturnDto;
 import com.murad.operationsservice.dto.SendingPaymentDto;
 import com.murad.operationsservice.dto.UserResponse;
@@ -33,9 +34,10 @@ public class BuyService {
     String returnUrl;
     @Value("${balance.server.url}")
     String URL;
-    public String buyFromCart() {
+    public PaymentRequest buyFromCart() {
         log.info("Получил команду на операцию оплаты");
         var productBasket= cartServiceClient.getCart();
+        PaymentRequest paymentRequest=null;
         var user = getUser();
         log.info("Количество продукта в корзине {}, ID user {}",productBasket.getProducts().size(),user.getId());
         if(productBasket==null) return null;
@@ -57,11 +59,11 @@ public class BuyService {
                 .tranId(uuid)
                 .redirectServiceURL(returnUrl).build();
         try {
-            requestHelper.sendPost(URL,paymentDto);
+           paymentRequest= requestHelper.getPaymentUrl(URL,paymentDto);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
-        return "https://google.ru";
+        return paymentRequest;
     }
     private UserResponse getUser(){
         var userName = SecurityUtils.getCurrentUsername().orElseThrow(() -> {

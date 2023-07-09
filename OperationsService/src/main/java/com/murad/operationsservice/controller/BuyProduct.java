@@ -1,5 +1,6 @@
 package com.murad.operationsservice.controller;
 
+import com.murad.operationsservice.dto.PaymentRequest;
 import com.murad.operationsservice.dto.PaymentReturnDto;
 import com.murad.operationsservice.model.HashIdGeneration;
 import com.murad.operationsservice.service.BuyService;
@@ -17,7 +18,7 @@ public class BuyProduct {
     private final HashIdGeneration generation;
 
     @PostMapping("/fromCart")
-    public String buyFromCart(){
+    public PaymentRequest buyFromCart(){
         return buyService.buyFromCart();
     }
     @PostMapping("/return")
