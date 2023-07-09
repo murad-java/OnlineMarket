@@ -40,7 +40,6 @@ public class BuyService {
         log.info("USER ID {}",user.getId());
         var productBasket= cartServiceClient.getCart();
         PaymentRequest paymentRequest=null;
-        var user = getUser();
         log.info("Количество продукта в корзине {}, ID user {}",productBasket.getProducts().size(),user.getId());
         if(productBasket==null) return null;
         var uuid = hashIdGeneration.getHash(productBasket.getTotalPrice().toString() , UUID.randomUUID().toString());
