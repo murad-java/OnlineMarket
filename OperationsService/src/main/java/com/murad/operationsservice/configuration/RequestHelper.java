@@ -84,7 +84,7 @@ public class RequestHelper {
         // Обработка ответа
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             String jsonResponse = responseEntity.getBody();
-
+            log.info("JSON из epoint service={}",jsonResponse);
             // Преобразование JSON-ответа в объект
             PaymentRequest responseData = gson.fromJson(jsonResponse, PaymentRequest.class);
             return responseData;
