@@ -1,6 +1,11 @@
 server:
   port: 8804
+  my:
+    url: https://gamit.az:8800/operation/buy/return
 
+balance:
+  server:
+    url: https://epoint.gamit.az/epoint/operation/send
 spring:
   jackson:
     serialization:
@@ -11,6 +16,7 @@ spring:
     url: jdbc:postgresql://3.69.157.49:5545/market
     username: postgres
     password: MuRaD198852_Mmm
+
   jpa:
       hibernate:
         ddl-auto: update
