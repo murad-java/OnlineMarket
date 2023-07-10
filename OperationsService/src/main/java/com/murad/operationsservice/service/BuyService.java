@@ -83,15 +83,17 @@ public class BuyService {
         }
         List<BuyEntity> buyEntities = buyRepository.findByUuid(String.valueOf(dto.getUserId()));
         for (var buyEntity : buyEntities) {
+
             if (dto.isError()) {
                 buyEntity.setError(true);
-                buyEntity.setReturnCode(dto.getMessage());
-                buyEntity.setReturnMessage(dto.getMessage());
             } else {
                 buyEntity.setPay(true);
-                buyEntity.setReturnCode(dto.getMessage());
-                buyEntity.setReturnMessage(dto.getMessage());
             }
+
+            buyEntity.setReturnCode(dto.getMessage());
+            buyEntity.setReturnMessage(dto.getMessage());
+            buyEntity.setDateTime(LocalDateTime.now());
+
             buyRepository.save(buyEntity);
         }
         ///////////////
