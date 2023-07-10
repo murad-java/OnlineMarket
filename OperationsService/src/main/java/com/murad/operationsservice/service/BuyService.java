@@ -3,10 +3,7 @@ package com.murad.operationsservice.service;
 import com.murad.operationsservice.configuration.CartServiceClient;
 import com.murad.operationsservice.configuration.RequestHelper;
 import com.murad.operationsservice.configuration.UserService;
-import com.murad.operationsservice.dto.PaymentRequest;
-import com.murad.operationsservice.dto.PaymentReturnDto;
-import com.murad.operationsservice.dto.SendingPaymentDto;
-import com.murad.operationsservice.dto.UserResponse;
+import com.murad.operationsservice.dto.*;
 import com.murad.operationsservice.entity.BuyEntity;
 import com.murad.operationsservice.exception.ResourceNotFoundException;
 import com.murad.operationsservice.model.HashIdGeneration;
@@ -27,6 +24,7 @@ import java.util.UUID;
 public class BuyService {
     private final BuyRepository buyRepository;
     private final UserService userService;
+    private final ProductService productService;
     private final HashIdGeneration hashIdGeneration;
     private final RequestHelper requestHelper;
     private final CartServiceClient cartServiceClient;
@@ -90,5 +88,31 @@ public class BuyService {
             }
             buyRepository.save(buyEntity);
         }
+    }
+
+    public PaymentRequest buyProduct(BuyProductDto buyProductDto) {
+        var product= productService.getProductById(buyProductDto.getProductId());
+        var uuid = hashIdGeneration.getHash(product.getPrice().toString() , UUID.randomUUID().toString());
+        var user = getUser();
+        PaymentRequest paymentRequest=null;
+        BuyEntity buyEntity = BuyEntity.builder()
+                .uuid(String.valueOf(uuid))
+                .price(product.getPrice())
+                .productId(product.getId())
+                .userId(product.getId())
+                .build();
+        buyRepository.save(buyEntity);
+        var paymentDto = SendingPaymentDto.builder()
+                .amount(product.getPrice())
+                .language("ru")
+                .uid(user.getId())
+                .tranId(uuid)
+                .redirectServiceURL(returnUrl).build();
+        try {
+            paymentRequest= requestHelper.getPaymentUrl(URL,paymentDto);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return paymentRequest;
     }
 }

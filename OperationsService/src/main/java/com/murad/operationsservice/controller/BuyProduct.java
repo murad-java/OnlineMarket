@@ -1,5 +1,6 @@
 package com.murad.operationsservice.controller;
 
+import com.murad.operationsservice.dto.BuyProductDto;
 import com.murad.operationsservice.dto.PaymentRequest;
 import com.murad.operationsservice.dto.PaymentReturnDto;
 import com.murad.operationsservice.model.HashIdGeneration;
@@ -20,6 +21,10 @@ public class BuyProduct {
     @PostMapping("/fromCart")
     public PaymentRequest buyFromCart(){
         return buyService.buyFromCart();
+    }
+    @PostMapping("/product")
+    public PaymentRequest buyProduct(@RequestBody BuyProductDto buyProductDto){
+        return buyService.buyProduct(buyProductDto);
     }
     @PostMapping("/return")
     public void returnPay(@RequestBody PaymentReturnDto dto){
