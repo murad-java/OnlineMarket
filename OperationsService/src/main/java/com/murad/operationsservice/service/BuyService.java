@@ -91,7 +91,7 @@ public class BuyService {
             buyRepository.save(buyEntity);
         }
         ///////////////
-        if (buyEntities != null && buyEntities.size() > 1) {
+        if (buyEntities != null && buyEntities.size() > 0) {
             long userId = buyEntities.get(0).getUserId();
             List<Long> productIds = buyEntities.stream().map(buyEntity -> buyEntity.getProductId()).toList();
             FromCartDeleteDto fromCartDeleteDto = FromCartDeleteDto.builder()
