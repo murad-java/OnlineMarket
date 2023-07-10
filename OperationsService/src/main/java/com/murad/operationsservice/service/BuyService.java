@@ -5,6 +5,7 @@ import com.murad.operationsservice.configuration.RequestHelper;
 import com.murad.operationsservice.configuration.UserService;
 import com.murad.operationsservice.dto.*;
 import com.murad.operationsservice.entity.BuyEntity;
+import com.murad.operationsservice.entity.ProductEntity;
 import com.murad.operationsservice.exception.ResourceNotFoundException;
 import com.murad.operationsservice.model.HashIdGeneration;
 import com.murad.operationsservice.repository.BuyRepository;
@@ -14,6 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -127,5 +131,32 @@ public class BuyService {
             log.error(e.getMessage());
         }
         return paymentRequest;
+    }
+
+    public List<BuyProductRequest> getBuyProducts() {
+        var user= getUser();
+        List<BuyProductRequest> buyProductRequests=new ArrayList<>();
+        List<BuyEntity> buyEntities = buyRepository.findByUserIdAndPay(user.getId(),true);
+        for(var buyEntity: buyEntities){
+            ProductEntity productEntity = productService.getProductById(buyEntity.getProductId());
+            byte[] image = productService.getFirstPhotoByProduct(productEntity.getId());
+            BuyProductRequest productRequest = BuyProductRequest.builder()
+                    .name(productEntity.getName())
+                    .image(image)
+                    .price(buyEntity.getPrice())
+                    .buyDateTime(formatDateTime(buyEntity.getDateTime()))
+                    .productFileEntity(ProductFileRequest.converData(productEntity.getFile()))
+                    .build();
+            buyProductRequests.add(productRequest);
+        }
+        return buyProductRequests;
+    }
+
+    private String formatDateTime(LocalDateTime dateTime){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+
+        String formattedDateTime = dateTime.format(formatter);
+
+        return formattedDateTime;
     }
 }
