@@ -103,6 +103,9 @@ public class CartService {
 
         return getCart();
     }
+    public void deleteAllByUserId(UserResponse user){
+        cartRepository.deleteAllByUserId(user.getId());
+    }
 
     public int getCount() {
         ProductBasket productBasket = getCart();

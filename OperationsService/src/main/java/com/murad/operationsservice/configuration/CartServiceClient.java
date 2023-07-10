@@ -12,4 +12,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface CartServiceClient {
     @PostMapping("/get")
     ProductBasket getCart(@RequestBody UserResponse user );
+    @PostMapping("/delete/by/userid")
+    ProductBasket deleteAllFromCart(@RequestBody UserResponse user );
 }

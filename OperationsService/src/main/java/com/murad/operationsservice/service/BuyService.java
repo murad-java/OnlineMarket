@@ -88,6 +88,7 @@ public class BuyService {
             }
             buyRepository.save(buyEntity);
         }
+        cartServiceClient.deleteAllFromCart(getUser());
     }
 
     public PaymentRequest buyProduct(BuyProductDto buyProductDto) {
@@ -99,7 +100,7 @@ public class BuyService {
                 .uuid(String.valueOf(uuid))
                 .price(product.getPrice())
                 .productId(product.getId())
-                .userId(product.getId())
+                .userId(user.getId())
                 .build();
         buyRepository.save(buyEntity);
         var paymentDto = SendingPaymentDto.builder()

@@ -54,4 +54,8 @@ public class CartController {
     public ResponseEntity<ProductBasket> deleteProductFromCart(@RequestBody CountOperation countOperation) {
         return ResponseEntity.ok(cartService.deleteProductFromCart(countOperation.getId()));
     }
+    @PostMapping("/delete/by/userid")
+    public void deleteByUserId(@RequestBody UserResponse userResponse){
+        cartService.deleteAllByUserId(userResponse);
+    }
 }
