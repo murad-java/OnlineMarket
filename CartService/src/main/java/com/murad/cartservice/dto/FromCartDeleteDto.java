@@ -14,4 +14,12 @@ import java.util.List;
 public class FromCartDeleteDto {
     private long userId;
     private List<Long> productIds;
+
+    @Override
+    public String toString() {
+        return "FromCartDeleteDto{" +
+                "userId=" + userId +
+                ", productIds=" + productIds.toString() +
+                '}';
+    }
 }

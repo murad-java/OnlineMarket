@@ -8,6 +8,7 @@ import com.murad.cartservice.feign.UserService;
 import com.murad.cartservice.repository.CartRepository;
 import com.murad.cartservice.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class CartService {
 
     private final CartRepository cartRepository;
@@ -103,10 +105,13 @@ public class CartService {
 
         return getCart();
     }
-    public void deleteAllByUserId(FromCartDeleteDto user){
-       List<CartEntity> cartEntities= cartRepository.findByUserId(user.getUserId());
+    public void deleteAllByUserId(FromCartDeleteDto fromCartDeleteDto){
+        log.warn("Пришли данные на удаление USER_ID={} и Product Size={}",fromCartDeleteDto.getUserId(),fromCartDeleteDto.getProductIds().size());
+        log.warn("fromCartDeleteDto={}",fromCartDeleteDto);
+
+        List<CartEntity> cartEntities= cartRepository.findByUserId(fromCartDeleteDto.getUserId());
        for(CartEntity entity:cartEntities){
-           if(user.getProductIds().stream().anyMatch(aLong -> aLong== entity.getProductId())){
+           if(fromCartDeleteDto.getProductIds().stream().anyMatch(aLong -> aLong== entity.getProductId())){
                cartRepository.delete(entity);
            }
        }
