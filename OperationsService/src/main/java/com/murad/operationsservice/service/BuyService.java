@@ -51,6 +51,7 @@ public class BuyService {
                     .uuid(String.valueOf(uuid))
                     .price(cart.getPrice())
                     .productId(cart.getProductId())
+                    .dateTime(LocalDateTime.now())
                     .userId(user.getId())
                     .build();
             buyRepository.save(buyEntity);
