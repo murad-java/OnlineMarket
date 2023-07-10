@@ -1,9 +1,6 @@
 package com.murad.cartservice.controller;
 
-import com.murad.cartservice.dto.CountOperation;
-import com.murad.cartservice.dto.ProductBasket;
-import com.murad.cartservice.dto.SetCount;
-import com.murad.cartservice.dto.UserResponse;
+import com.murad.cartservice.dto.*;
 import com.murad.cartservice.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -55,7 +52,7 @@ public class CartController {
         return ResponseEntity.ok(cartService.deleteProductFromCart(countOperation.getId()));
     }
     @PostMapping("/delete/by/userid")
-    public void deleteByUserId(@RequestBody UserResponse userResponse){
+    public void deleteByUserId(@RequestBody FromCartDeleteDto userResponse){
         cartService.deleteAllByUserId(userResponse);
     }
 }

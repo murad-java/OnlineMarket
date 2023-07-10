@@ -103,8 +103,13 @@ public class CartService {
 
         return getCart();
     }
-    public void deleteAllByUserId(UserResponse user){
-        cartRepository.deleteAllByUserId(user.getId());
+    public void deleteAllByUserId(FromCartDeleteDto user){
+       List<CartEntity> cartEntities= cartRepository.findByUserId(user.getUserId());
+       for(CartEntity entity:cartEntities){
+           if(user.getProductIds().stream().anyMatch(aLong -> aLong== entity.getProductId())){
+               cartRepository.delete(entity);
+           }
+       }
     }
 
     public int getCount() {

@@ -1,5 +1,6 @@
 package com.murad.operationsservice.configuration;
 
+import com.murad.operationsservice.dto.FromCartDeleteDto;
 import com.murad.operationsservice.dto.ProductBasket;
 import com.murad.operationsservice.dto.UserResponse;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -13,5 +14,5 @@ public interface CartServiceClient {
     @PostMapping("/get")
     ProductBasket getCart(@RequestBody UserResponse user );
     @PostMapping("/delete/by/userid")
-    ProductBasket deleteAllFromCart(@RequestBody UserResponse user );
+    ProductBasket deleteAllFromCart(@RequestBody FromCartDeleteDto fromCartDeleteDto );
 }

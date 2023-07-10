@@ -32,16 +32,17 @@ public class BuyService {
     String returnUrl;
     @Value("${balance.server.url}")
     String URL;
+
     public PaymentRequest buyFromCart() {
         log.info("Получил команду на операцию оплаты");
         var user = getUser();
-        log.info("USER ID {}",user.getId());
-        var productBasket= cartServiceClient.getCart(user);
-        PaymentRequest paymentRequest=null;
-        log.info("Количество продукта в корзине {}, ID user {}",productBasket.getProducts().size(),user.getId());
-        if(productBasket==null) return null;
-        var uuid = hashIdGeneration.getHash(productBasket.getTotalPrice().toString() , UUID.randomUUID().toString());
-        for(var cart : productBasket.getProducts()){
+        log.info("USER ID {}", user.getId());
+        var productBasket = cartServiceClient.getCart(user);
+        PaymentRequest paymentRequest = null;
+        log.info("Количество продукта в корзине {}, ID user {}", productBasket.getProducts().size(), user.getId());
+        if (productBasket == null) return null;
+        var uuid = hashIdGeneration.getHash(productBasket.getTotalPrice().toString(), UUID.randomUUID().toString());
+        for (var cart : productBasket.getProducts()) {
             BuyEntity buyEntity = BuyEntity.builder()
                     .uuid(String.valueOf(uuid))
                     .price(cart.getPrice())
@@ -58,13 +59,14 @@ public class BuyService {
                 .tranId(uuid)
                 .redirectServiceURL(returnUrl).build();
         try {
-           paymentRequest= requestHelper.getPaymentUrl(URL,paymentDto);
+            paymentRequest = requestHelper.getPaymentUrl(URL, paymentDto);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
         return paymentRequest;
     }
-    private UserResponse getUser(){
+
+    private UserResponse getUser() {
         var userName = SecurityUtils.getCurrentUsername().orElseThrow(() -> {
             throw new ResourceNotFoundException("Not found name in JWT!");
         });
@@ -72,30 +74,39 @@ public class BuyService {
     }
 
     public void paymentReturn(PaymentReturnDto dto) {
-        if(dto.isError()) {
+        if (dto.isError()) {
             log.error(dto.getMessage());
         }
-        List<BuyEntity> buyEntities= buyRepository.findByUuid(String.valueOf(dto.getUserId()));
-        for(var buyEntity : buyEntities){
-            if(dto.isError()){
+        List<BuyEntity> buyEntities = buyRepository.findByUuid(String.valueOf(dto.getUserId()));
+        for (var buyEntity : buyEntities) {
+            if (dto.isError()) {
                 buyEntity.setError(true);
                 buyEntity.setReturnCode(dto.getMessage());
                 buyEntity.setReturnMessage(dto.getMessage());
-            }else{
+            } else {
                 buyEntity.setPay(true);
                 buyEntity.setReturnCode(dto.getMessage());
                 buyEntity.setReturnMessage(dto.getMessage());
             }
             buyRepository.save(buyEntity);
         }
-        cartServiceClient.deleteAllFromCart(getUser());
+        ///////////////
+        if (buyEntities != null && buyEntities.size() > 1) {
+            long userId = buyEntities.get(0).getUserId();
+            List<Long> productIds = buyEntities.stream().map(buyEntity -> buyEntity.getProductId()).toList();
+            FromCartDeleteDto fromCartDeleteDto = FromCartDeleteDto.builder()
+                    .userId(userId)
+                    .productIds(productIds).build();
+            cartServiceClient.deleteAllFromCart(fromCartDeleteDto);
+        }
+
     }
 
     public PaymentRequest buyProduct(BuyProductDto buyProductDto) {
-        var product= productService.getProductById(buyProductDto.getProductId());
-        var uuid = hashIdGeneration.getHash(product.getPrice().toString() , UUID.randomUUID().toString());
+        var product = productService.getProductById(buyProductDto.getProductId());
+        var uuid = hashIdGeneration.getHash(product.getPrice().toString(), UUID.randomUUID().toString());
         var user = getUser();
-        PaymentRequest paymentRequest=null;
+        PaymentRequest paymentRequest = null;
         BuyEntity buyEntity = BuyEntity.builder()
                 .uuid(String.valueOf(uuid))
                 .price(product.getPrice())
@@ -110,7 +121,7 @@ public class BuyService {
                 .tranId(uuid)
                 .redirectServiceURL(returnUrl).build();
         try {
-            paymentRequest= requestHelper.getPaymentUrl(URL,paymentDto);
+            paymentRequest = requestHelper.getPaymentUrl(URL, paymentDto);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
