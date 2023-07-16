@@ -14,18 +14,17 @@ import java.util.Set;
 public class ProductEntity {
     @Id
     @GeneratedValue
-    private Long id;
-    private BigDecimal price;
-    private String name;
+    private Long                    id;
+    private BigDecimal              price;
+    private String                  name;
     @ManyToOne
-    private SubCategoryEntity subCategoryEntity;
-    @OneToMany(fetch =FetchType.LAZY, mappedBy = "productEntity")
+    private SubCategoryEntity       subCategoryEntity;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productEntity")
     private Set<ProductImageEntity> images;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "productEntity")
-    private List<ProductFileEntity> file ;
-    private String Description;
-    private LocalDateTime createDateTime = LocalDateTime.now();
-
+    private List<ProductFileEntity> file;
+    private String                  Description;
+    private LocalDateTime           createDateTime = LocalDateTime.now();
 
 
 }

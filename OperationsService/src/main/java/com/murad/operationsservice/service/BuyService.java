@@ -19,18 +19,17 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class BuyService {
-    private final BuyRepository buyRepository;
-    private final UserService userService;
-    private final ProductService productService;
-    private final HashIdGeneration hashIdGeneration;
-    private final RequestHelper requestHelper;
+    private final BuyRepository     buyRepository;
+    private final UserService       userService;
+    private final ProductService    productService;
+    private final HashIdGeneration  hashIdGeneration;
+    private final RequestHelper     requestHelper;
     private final CartServiceClient cartServiceClient;
     @Value("${server.my.url}")
     String returnUrl;
@@ -41,7 +40,7 @@ public class BuyService {
         log.info("Получил команду на операцию оплаты");
         var user = getUser();
         log.info("USER ID {}", user.getId());
-        var productBasket = cartServiceClient.getCart(user);
+        var            productBasket  = cartServiceClient.getCart(user);
         PaymentRequest paymentRequest = null;
         log.info("Количество продукта в корзине {}, ID user {}", productBasket.getProducts().size(), user.getId());
         if (productBasket == null) return null;
@@ -100,7 +99,7 @@ public class BuyService {
         ///////////////
         if (!dto.isError()) {
             if (buyEntities != null && buyEntities.size() > 0) {
-                long userId = buyEntities.get(0).getUserId();
+                long       userId     = buyEntities.get(0).getUserId();
                 List<Long> productIds = buyEntities.stream().map(buyEntity -> buyEntity.getProductId()).toList();
                 FromCartDeleteDto fromCartDeleteDto = FromCartDeleteDto.builder()
                         .userId(userId)
@@ -111,9 +110,9 @@ public class BuyService {
     }
 
     public PaymentRequest buyProduct(BuyProductDto buyProductDto) {
-        var product = productService.getProductById(buyProductDto.getProductId());
-        var uuid = hashIdGeneration.getHash(product.getPrice().toString(), UUID.randomUUID().toString());
-        var user = getUser();
+        var            product        = productService.getProductById(buyProductDto.getProductId());
+        var            uuid           = hashIdGeneration.getHash(product.getPrice().toString(), UUID.randomUUID().toString());
+        var            user           = getUser();
         PaymentRequest paymentRequest = null;
         BuyEntity buyEntity = BuyEntity.builder()
                 .uuid(String.valueOf(uuid))
@@ -137,12 +136,12 @@ public class BuyService {
     }
 
     public List<BuyProductRequest> getBuyProducts() {
-        var user= getUser();
-        List<BuyProductRequest> buyProductRequests=new ArrayList<>();
-        List<BuyEntity> buyEntities = buyRepository.findByUserIdAndPay(user.getId(),true);
-        for(var buyEntity: buyEntities){
+        var                     user               = getUser();
+        List<BuyProductRequest> buyProductRequests = new ArrayList<>();
+        List<BuyEntity>         buyEntities        = buyRepository.findByUserIdAndPay(user.getId(), true);
+        for (var buyEntity : buyEntities) {
             ProductEntity productEntity = productService.getProductById(buyEntity.getProductId());
-            byte[] image = productService.getFirstPhotoByProduct(productEntity.getId());
+            byte[]        image         = productService.getFirstPhotoByProduct(productEntity.getId());
             BuyProductRequest productRequest = BuyProductRequest.builder()
                     .name(productEntity.getName())
                     .image(image)
@@ -155,7 +154,7 @@ public class BuyService {
         return buyProductRequests;
     }
 
-    private String formatDateTime(LocalDateTime dateTime){
+    private String formatDateTime(LocalDateTime dateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
         String formattedDateTime = dateTime.format(formatter);

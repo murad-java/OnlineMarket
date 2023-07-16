@@ -1,6 +1,5 @@
 package com.murad.operationsservice.dto;
 
-import com.murad.operationsservice.entity.ProductFileEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,10 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class BuyProductRequest {
-    private String name;
+    private String                   name;
     private List<ProductFileRequest> productFileEntity;
-    private BigDecimal price;
-    private String buyDateTime;
-    private byte[] image;
-
+    private BigDecimal               price;
+    private String                   buyDateTime;
+    private byte[]                   image;
 }

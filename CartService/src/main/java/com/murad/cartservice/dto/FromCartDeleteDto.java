@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class FromCartDeleteDto {
-    private long userId;
+    private long       userId;
     private List<Long> productIds;
 
     @Override

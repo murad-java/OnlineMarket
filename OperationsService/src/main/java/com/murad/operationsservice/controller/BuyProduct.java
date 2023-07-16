@@ -18,24 +18,26 @@ import java.util.List;
 @RequestMapping("/buy")
 @RequiredArgsConstructor
 public class BuyProduct {
-    private final BuyService buyService;
+    private final BuyService       buyService;
     private final HashIdGeneration generation;
 
     @PostMapping("/get/products")
-    public List<BuyProductRequest> getBuyProducts(){
+    public List<BuyProductRequest> getBuyProducts() {
         return buyService.getBuyProducts();
     }
 
     @PostMapping("/fromCart")
-    public PaymentRequest buyFromCart(){
+    public PaymentRequest buyFromCart() {
         return buyService.buyFromCart();
     }
+
     @PostMapping("/product")
-    public PaymentRequest buyProduct(@RequestBody BuyProductDto buyProductDto){
+    public PaymentRequest buyProduct(@RequestBody BuyProductDto buyProductDto) {
         return buyService.buyProduct(buyProductDto);
     }
+
     @PostMapping("/return")
-    public void returnPay(@RequestBody PaymentReturnDto dto){
+    public void returnPay(@RequestBody PaymentReturnDto dto) {
         if (generation.checkHash(dto)) {
             buyService.paymentReturn(dto);
         }
