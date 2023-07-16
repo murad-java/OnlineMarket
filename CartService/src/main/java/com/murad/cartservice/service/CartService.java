@@ -27,9 +27,9 @@ public class CartService {
     private final UserService    userService;
 
     @Value("${cart.max-count}")
-    private final int  maxCount;
+    private  int  maxCount;
     @Value("${cart.min-count}")
-    private final int  minCount;
+    private  int  minCount;
     private UserResponse getUser() {
         var userName = SecurityUtils.getCurrentUsername().orElseThrow(() -> {
             throw new InfoNotFoundException("Not found name in JWT!");
