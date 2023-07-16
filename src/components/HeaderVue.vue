@@ -1,5 +1,5 @@
 <template>  <div class="border-dark">
-  <header class="section-header container radius-header  shadow-m">
+  <header class="section-header container radius-header  fixed-top  shadow-m">
 
     <section class="header-main ">
       <div class="container">
@@ -32,7 +32,7 @@
 <!--                </a>-->
 <!--              </div>-->
               <div class="widget-header mr-3">
-                <a href="#" class="widget-view">
+                <a href="#" class="widget-view" @click="OpenOrders">
                   <div class="icon-area">
                     <i class="fa fa-store"></i>
                   </div>
@@ -43,8 +43,9 @@
                                   @dataChanged="userNameChange" @close="closeModal"/>
               <cart-model :show-cart="showCart" @close="closeCart"/>
               <info-model :show-info="showInfo" @close="closeInfo"/>
+              <orders-model :show-orders="showOrders" @close="ordersInfo"/>
               <div class="widget-header mr-2">
-                <a href="#" class="widget-view" @click="OpenCart">
+                <a  class="widget-view" @click="OpenCart">
                   <div class="icon-area">
                     <i class="fa fa-shopping-cart"></i>
                     <span class="notify" v-if="cartCount||cartCount>0">{{ cartCount }}</span>
@@ -76,6 +77,7 @@ import LoginRegistration from "@/components/LoginRegistration";
 import authService from "@/api/AuthService";
 import cartModal from "@/components/cart-modal";
 import info from "@/components/infoModal";
+import orders from "@/components/order-modal";
 import CartService from "@/api/CartService";
 import { mapState } from 'vuex'
 export default {
@@ -85,6 +87,7 @@ export default {
       showModal: false, // флаг, указывающий, нужно ли показывать модальное окно
       showCart: false,
       showInfo: false,
+      showOrders:false,
       uname: 'Log In',
       unameDefault: 'Log In',
       logModel: null,
@@ -95,7 +98,8 @@ export default {
   components: {
     "login-registration": LoginRegistration,
     "cart-model": cartModal,
-    "info-model": info
+    "info-model": info,
+    "orders-model":orders
   },
   watch: {
     showCart: function () {
@@ -122,6 +126,9 @@ export default {
     OpenInfo() {
       this.showInfo = true
     },
+    OpenOrders() {
+      this.showOrders = true
+    },
     openModal() {
       this.showModal = true;
       let un = authService.getUserName()
@@ -142,6 +149,9 @@ export default {
     },
     closeInfo(){
       this.showInfo=false
+    },
+    ordersInfo(){
+      this.showOrders=false
     },
     userNameChange() {
       try {
@@ -168,6 +178,7 @@ export default {
     }
   },
   mounted() {
+    authService.loginDefault()
     let isTrue = authService.iAM();
     if (isTrue) {
       this.uname = authService.getUserName()

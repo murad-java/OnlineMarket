@@ -219,6 +219,7 @@ export default {
         username: this.userName,
         password: this.password
       }).then(value => {
+        if(value==null) return
         this.name = value.data.user.username
         console.log(this.name)
         this.$emit('dataChanged', this.name)

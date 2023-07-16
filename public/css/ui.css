@@ -13,7 +13,7 @@ a:hover {
   text-decoration: none; }
 
 .fullscreen-bg {
-  background: linear-gradient(to right, rgba(152, 152, 152, 0.55), #ffffff 50%, rgba(152, 152, 152, 0.55));
+  background: linear-gradient(to right, rgba(231, 245, 255, 0.72), #fafafa 50%, rgba(231, 245, 255, 0.72));
 }
 .shadow-m{
   box-shadow: 0px 21px 9px -14px rgba(0, 0, 0, 0.47) !important;

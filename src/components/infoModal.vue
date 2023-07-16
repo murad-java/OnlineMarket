@@ -1,13 +1,14 @@
 <template>
-  <section class="section-content bg-white padding-y modal  " id="popup-modal" v-if="showInfo" @click="closeModal">
-    <div class="container modal-contents" @click.stop>
+  <section class="section-content bg-white padding-y modal  " id="popup-modal" v-if="showInfo" @click="closeModal" >
+    <div class="container modal-contents" @click.stop style="min-width: 700px">
      <div class="modal-header align-items-center">
        <h5 class="modal-title">Info</h5>
        <div class="row align-items-center justify-content-center w-75  ml-5" >
          <div class="col-2"><button class="btn btn-block " :class="{ 'b': isContactActive }" @click="contactClick" style="font-size: 1.3ch">Contact</button> </div>
-         <div class="col-2"><button class="btn btn-block " :class="{ 'b': isAboutActive }" @click="aboutClick" style="font-size: 1.3ch">About_us</button> </div>
-         <div class="col-4"><button class="btn btn-block " :class="{ 'b': isTermsActive }" @click="termsClick" style="font-size: 1.3ch">Terms_of_use</button> </div>
-         <div class="col-4"><button class="btn btn-block " :class="{ 'b': isPrivacyActive }" @click="privacyClick" style="font-size: 1.3ch">Privacy_policy</button> </div>
+         <div class="col-2"><button class="btn btn-block " :class="{ 'b': isAboutActive }" @click="aboutClick" style="font-size: 1.3ch">About</button> </div>
+         <div class="col-3"><button class="btn btn-block " :class="{ 'b': isTermsActive }" @click="termsClick" style="font-size: 1.3ch">Terms_of_use</button> </div>
+         <div class="col-3"><button class="btn btn-block " :class="{ 'b': isPrivacyActive }" @click="privacyClick" style="font-size: 1.3ch">Privacy_policy</button> </div>
+         <div class="col-2"><button class="btn btn-block " :class="{ 'b': isProductReturnActive }" @click="returnClick" style="font-size: 1.3ch">Return</button> </div>
        </div>
         <button class="close" type="button" @click="closeModal">
          <span aria-hidden="true">&times;</span>
@@ -25,7 +26,7 @@
           </div>
         </div>
         <div v-if="isAboutActive" class="textarea-wrapper w-100 align-content-center">
-          <textarea id="my-textarea" readonly rows="4" placeholder='gamit.az müxtəlif proqramlaşdırma dillərində proqramlaşdırma kurslarına
+          <textarea id="my-textarea" readonly rows="4" >gamit.az müxtəlif proqramlaşdırma dillərində proqramlaşdırma kurslarına
 çıxışı təmin edən saytdır. Saytımızda proqramçılar tərəfindən hazırlanmış
 kursların geniş seçimini tapa bilərsiniz.
 
@@ -36,10 +37,14 @@ etməyə çalışırıq. Kurslarımızı veb saytımızda almaq olar, burada öz
 Biz istifadəçilərimizin məxfiliyinə hörmət edirik və şəxsi məlumatlarınızla
 işləyərkən yüksək təhlükəsizlik standartlarına riayət etməyimizi təmin edirik.
 Hər hansı bir sualınız, istək və ya təklifiniz olarsa, zəhmət olmasa veb
-saytımızdakı əlaqə forması vasitəsilə bizimlə əlaqə saxlayın.'></textarea>
+saytımızdakı əlaqə forması vasitəsilə bizimlə əlaqə saxlayın.
+
+ Ünvan: AZ2722 Xaçmaz Rayonu Ləcət
+ VÖEN:  7703501282
+          </textarea>
         </div>
         <div v-if="isTermsActive" class="textarea-wrapper w-100 ">
-          <textarea id="my-textarea" readonly  rows="4" placeholder='İstifadə şərtləri
+          <textarea id="my-textarea" readonly  rows="4" >İstifadə şərtləri
 
 Gamit.az saytına xoş gəlmisiniz.
 Aşağıda xidmətlərimizə və məzmunumuza girişinizi tənzimləyən saytımızdan istifadə
@@ -66,10 +71,10 @@ məlumatla bağlı zərər və ya digər maddi itkilərə görə məsuliyyət da
 İstifadə Şərtləri Dəyişiklikləri
 Biz istənilən vaxt bu istifadə şərtlərini dəyişdirmək hüququnu özümüzdə saxlayırıq.
 Dəyişikliklər vebsaytımızda yerləşdiriləcək və biz sizi vaxtaşırı nəzərdən keçirmək üçün bu
-səhifəni yoxlamağı tövsiyə edirik.'></textarea>
+səhifəni yoxlamağı tövsiyə edirik.</textarea>
         </div>
         <div v-if="isPrivacyActive" class="textarea-wrapper w-100 ">
-          <textarea id="my-textarea" readonly  rows="4" placeholder='  Məxfilik Siyasəti
+          <textarea id="my-textarea" readonly  rows="4" >  Məxfilik Siyasəti
 
 Sayta daxil olan hər bir istifadəçi aşağıda göstərilən qaydaları qəbul edir.
 Bu qaydalar istifadəçilərə xəbərdarlıq edilmədən əlavə edilə, dəyişdirilə və ya silinə bilər.
@@ -120,7 +125,35 @@ qüvvədə olan qanun və qaydalara əməl edirik.
 Məxfilik siyasətimiz və ya şəxsi məlumatların emalı ilə bağlı hər hansı sualınız, təklifiniz və ya
 şərhiniz varsa, vebsaytımızda göstərilən əlaqə məlumatları vasitəsilə bizimlə əlaqə saxlaya bilərsiniz.
 Biz istifadəçilərimizin etibarını qiymətləndiririk və şəxsi məlumatlarınızla işləyərkən yüksək məxfilik
-və təhlükəsizlik standartlarını qorumağa davam etməyimizi təmin edirik.'></textarea>
+və təhlükəsizlik standartlarını qorumağa davam etməyimizi təmin edirik.</textarea>
+        </div>
+        <div v-if="isProductReturnActive" class="textarea-wrapper w-100 ">
+          <textarea id="my-textarea" readonly  rows="4" >
+1. Məhsulun geri qaytarılması:
+Məhsulun geri qaytarılması yalnız istifadə olunmamış və yüklənməmiş
+proqramlaşdırma dərsləri üçün qəbul olunur.
+Geri qaytarmaq üçün alışın təsdiqini, elektron çeki və ya sifarişin
+təsdiqini təqdim etməlisiniz.
+Məhsulun geri qaytarılması üçün müraciətlər alışdan sonra 1 (bir)
+gün ərzində edilməlidir.
+
+2. Məhsulun dəyişdirilməsi:
+Biz proqramlaşdırma dərslərini digər məhsullar və xidmətlərlə
+dəyişdirmək imkanı təqdim etmirik.
+Dərsləri seçərkən səhv etdiysinizsə, kömək almaq üçün dəstək
+xidmətimizlə əlaqə saxlayın.
+
+3. Geri ödəniş:
+Geri ödəniş alışın etdiyiniz ödəmə sistemindən həyata keçirilir.
+Geri ödənişin emalı, geri qaytarma müraciətinizi aldıqdan sonrakı 1 (bir)
+gün ərzində başa gələ bilər.
+Lütfən, bank və ödəmə sistemləri ilə bağlı gecikmələrin geri ödəniş
+prosesində mümkün olduğunu nəzərə alın.
+
+4. İstisnalar:
+Proqramlaşdırma dərslərini endirdikdən və ya istifadə etməyə başladıqdan
+sonra heç bir geri qaytarma və ya mübadilə qəbul edilməyəcək.
+Məhsulun qüsurlu və ya təsvir olunmadığı hallar istisna olmaqla.</textarea>
         </div>
 <!--        <aside class="form-group col-md-8">-->
 <!--          <div class="card product-details">-->
@@ -171,6 +204,7 @@ export default {
       isAboutActive:false,
       isTermsActive:false,
       isPrivacyActive:false,
+      isProductReturnActive:false
     }
   },
   props: {
@@ -196,6 +230,10 @@ export default {
       this.deactivateAll()
       this.isPrivacyActive = true
     },
+    returnClick(){
+      this.deactivateAll()
+      this.isProductReturnActive = true
+    },
     closeModal() {
       this.img = null
       this.$emit('close');
@@ -209,6 +247,7 @@ export default {
       this.isAboutActive = false
       this.isTermsActive = false
       this.isPrivacyActive = false
+      this.isProductReturnActive = false
     },
     addToCart(){
       CartService.addToCart(this.selectedProduct.id).then(()=>

@@ -2,7 +2,7 @@
   <section class="section-content padding-y">
     <div class="container">
 
-      <div class="card mb-3 radius shadow-m border-dark">
+      <div class="card mb-3 filter radius shadow-m border-dark">
         <div class="card-body">
 
           <div class="row">
@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-      <div class="spinner-border text-primary" style="position: fixed;top: 9%;left: 50%;" role="status" v-if="loading">
+      <div class="spinner-border text-primary" style="position: fixed;top: 9%;left: 50%; z-index: 2000" role="status" v-if="loading">
         <span class="sr-only">Loading...</span>
       </div>
       <div v-if="response" class="row">
@@ -55,7 +55,7 @@
           <figure class="card card-product-grid radius shadow-m border-dark"  >
             <div class="img-wrap align-content-center"  >
               <span style="display: none" class="badge badge-danger"> NEW </span>
-              <img style="width: 94%; height: auto; margin-top: 4%;"  :src="product.img">
+              <img class="rounded" style="width: 94%; height: auto; margin-top: 4%;"  :src="product.img">
             </div> <!-- img-wrap.// -->
             <figcaption class="info-wrap" >
               <h4 href="#" class="title mb-2">{{ product.name }}</h4>
@@ -66,27 +66,30 @@
               </div>
 <!--              <p class="text-muted ">{{ product.description }}</p>-->
               <hr >
-              <div @click.stop>
-              <a href="#" class="btn btn-outline-primary"  @click=" addToCart(product)"> <i class="fa fa-cart-arrow-down" ></i> Add to
+              <div @click.stop style="display: flex">
+              <a href="#" class="btn btn-outline-primary col-6"  @click=" addToCart(product)"> <i class="fa fa-cart-arrow-down" ></i> Add to
                 cart
               </a>
+                <div class="col-1"></div>
+                <a href="#" class="btn btn-outline-primary-green col-5"  @click=" buy(product)"> <i class="fa-solid fa-bag-shopping"></i> Buy
+                </a>
               </div>
             </figcaption>
           </figure>
         </div>
       </div>
       <product-modal :show-modal="showModal" :selected-product="selectedProduct" :imgs="imgs" :images-obj="imagesObj" @close="closeModal" />
-      <nav v-if="response!=null && response.length>20" class="mb-4" aria-label="Page navigation sample" >
-        <ul class="pagination">
-          <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">4</a></li>
-          <li class="page-item"><a class="page-link" href="#">5</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-      </nav>
+<!--      <nav v-if="response!=null && response.length>20000" class="mb-4" aria-label="Page navigation sample" >-->
+<!--        <ul class="pagination">-->
+<!--          <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>-->
+<!--          <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+<!--          <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--          <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--          <li class="page-item"><a class="page-link" href="#">4</a></li>-->
+<!--          <li class="page-item"><a class="page-link" href="#">5</a></li>-->
+<!--          <li class="page-item"><a class="page-link" href="#">Next</a></li>-->
+<!--        </ul>-->
+<!--      </nav>-->
     </div>
   </section>
   <footer class="  footer mt-auto py-3">
@@ -97,6 +100,11 @@
 
         <p class="text-monospace text-info">Email: safikhanov95@mail.ru Tel.: +994705116781</p>
         <p class="text-monospace text-muted"> &copy; {{year}} GAMIT.AZ All rights reserved </p>
+        <div>
+          <img class="flag" src="../assets/100.jpg">
+          <img class="flag" src="../assets/110.jpg" >
+          <img class="flag" src="../assets/111.jpg" >
+        </div>
         <br>
       </section>
     </div><!-- //container -->
@@ -109,6 +117,7 @@ import productModal from "@/components/product-modal";
 import ImageService from "@/api/ImageService";
 import Toasty from "@/api/Toasty";
 import CartService from "@/api/CartService";
+import BuyService from "@/api/BuyService";
 import { mapActions } from 'vuex'
 
 export default {
@@ -155,6 +164,19 @@ export default {
     addToCart(product){
       CartService.addToCart(product.id).then(() => {
         this.incrementCount();
+      })
+
+    },
+    buy(product){
+      BuyService.buy(product.id).then(response => {
+        if(response!=null)
+        {
+          if(response.data.error){
+            Toasty.showError(response.data.message)
+          }else {
+            window.open(response.data.url, '_blank');
+          }
+        }
       })
 
     },
@@ -242,9 +264,21 @@ export default {
 .radius {
   border-radius: 18px;
 }
-
+.flag{
+  max-width: 64px;
+  margin-right: 5px;
+}
 img {
   object-fit: cover;
 }
-
+.btn-outline-primary-green {
+  color: #20c02a;
+  border-color: #20c02a; }
+.btn-outline-primary-green:hover {
+  color: #fff;
+  background-color: #20c02a;
+  border-color: #20c02a; }
+.filter{
+  margin-top: 100px;
+}
 </style>
